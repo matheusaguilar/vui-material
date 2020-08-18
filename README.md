@@ -1,4 +1,4 @@
-# tslib2
+# vui-material
 
 ## Project setup
 ```
