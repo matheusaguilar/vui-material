@@ -1,0 +1,7 @@
+{
+  "files.autoSave": "off",
+  "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["vue", "html", "javascript", "typescript"]
+}
