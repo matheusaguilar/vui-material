@@ -1,12 +1,12 @@
 {
-  "name": "tslib2",
+  "name": "vui-material",
   "version": "0.1.0",
   "private": true,
-  "main": "./dist/libts.common.js",
+  "main": "./dist/vui-material.common.js",
   "types": "./types/ts/main.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve src/app.ts",
-    "build": "vue-cli-service build --target lib --name libts src/ts/main.ts",
+    "build": "vue-cli-service build --target lib --name vui-material src/ts/main.ts",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

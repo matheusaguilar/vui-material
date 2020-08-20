@@ -21,6 +21,14 @@ module.exports = {
         opts.happyPackMode = false;
         return opts;
       });
+
+    if (process.env.NODE_ENV === "production") {
+      config.externals([
+        "vue",
+        "vue-class-component",
+        "vue-property-decorator"
+      ]);
+    }
   },
   parallel: false,
   productionSourceMap: false,
