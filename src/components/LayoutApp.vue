@@ -4,7 +4,7 @@
     <Drawer
       ref="drawerModal"
       variant="modal"
-      v-if="drawer || drawerItems"
+      v-if="drawer && drawerItems"
       :items="drawerItems"
     >
       <template v-slot:header>
@@ -21,7 +21,7 @@
       <!--Drawer-->
       <Drawer
         ref="drawerSide"
-        v-if="drawer || drawerItems"
+        v-if="drawer && drawerItems"
         :items="drawerItems"
       >
         <template v-slot:header>
@@ -37,8 +37,10 @@
         <!--TopAppBar-->
         <TopAppBar
           :variant="topAppMode"
-          :menu="drawer || drawerItems ? true : false"
+          :title="title"
+          :menu="drawer && drawerItems ? true : false"
           @menu="clickMenu"
+          @title="clickTitle"
         >
           <slot name="topappbar"></slot>
         </TopAppBar>
@@ -72,9 +74,11 @@ export default class LayoutApp extends Vue {
   @Prop({ default: false }) private drawer!: boolean;
   @Prop({ default: null }) private drawerItems!: any[];
   @Prop({ default: 800 }) private drawerChange!: number;
+  @Prop({ default: "Title" }) private title!: string;
 
   @Ref("drawerModal") readonly drawerModal!: any;
   @Ref("drawerSide") readonly drawerSide!: any;
+  @Ref("topAppBar") readonly topAppBar!: any;
 
   clickMenu() {
     if (window.innerWidth < this.drawerChange) {
@@ -84,6 +88,10 @@ export default class LayoutApp extends Vue {
       this.drawerModal.close();
       this.drawerSide.change();
     }
+  }
+
+  clickTitle() {
+    this.$emit("title");
   }
 }
 </script>

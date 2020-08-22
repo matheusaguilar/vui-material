@@ -15,7 +15,9 @@
         >
           menu
         </button>
-        <span class="mdc-top-app-bar__title">{{ title }}</span>
+        <span class="mdc-top-app-bar__title" @click="clickTitle">{{
+          title
+        }}</span>
       </section>
 
       <section
@@ -59,6 +61,10 @@ export default class TopAppBar extends Vue {
 
   clickMenu() {
     this.$emit("menu");
+  }
+
+  clickTitle() {
+    this.$emit("title");
   }
 
   mounted() {

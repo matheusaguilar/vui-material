@@ -4,7 +4,7 @@
     :id="id"
     :[element.dataid]="'drawer' + _uid"
   >
-    <div class="mdc-drawer__header">
+    <div class="mdc-drawer__header" v-if="hasHeaderSlot">
       <slot name="header"></slot>
     </div>
     <div class="mdc-drawer__content">
@@ -21,9 +21,12 @@
           @click="clicked(index)"
         >
           <span class="mdc-list-item__ripple"></span>
-          <i class="material-icons mdc-list-item__graphic" aria-hidden="true">{{
-            item.icon
-          }}</i>
+          <i
+            class="material-icons mdc-list-item__graphic"
+            aria-hidden="true"
+            v-if="item.icon"
+            >{{ item.icon }}</i
+          >
           <span class="mdc-list-item__text">{{ item.name }}</span>
         </a>
       </nav>
@@ -54,6 +57,10 @@ export default class Drawer extends Vue {
     dismissible: " mdc-drawer--dismissible",
     modal: " mdc-drawer--modal"
   };
+
+  get hasHeaderSlot() {
+    return !!this.$slots.header;
+  }
 
   get variantClass() {
     return this.variantClassesMap[this.variant]
