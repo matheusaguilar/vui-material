@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="app mdc-theme--background">
-    <LayoutApp top-app-mode="standard" :drawer="true">
+    <LayoutApp top-app-mode="standard" :drawer="true" :drawerItems="[]">
       <template v-slot:drawer-header>
         <h3 class="mdc-drawer__title">Mail</h3>
         <h6 class="mdc-drawer__subtitle">email@material.io</h6>
@@ -39,7 +39,9 @@
       </template>
 
       <template v-slot:content>
-        <div class="layout-content mdc-theme--background"></div>
+        <div class="layout-content mdc-theme--background">
+          <div class="tee"></div>
+        </div>
       </template>
     </LayoutApp>
   </div>
@@ -95,5 +97,11 @@ body {
 .layout-content {
   width: 100%;
   height: 100%;
+}
+
+.tee {
+  width: 100px;
+  height: 2000px;
+  background-color: gray;
 }
 </style>

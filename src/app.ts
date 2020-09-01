@@ -1,6 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
-// import AppLayout from "./AppLayout.vue";
+// import App from "./AppLayout.vue";
 
 Vue.config.productionTip = false;
 

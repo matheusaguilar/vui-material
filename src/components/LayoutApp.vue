@@ -71,7 +71,7 @@ import Drawer from "./Drawer.vue";
 })
 export default class LayoutApp extends Vue {
   @Prop() private id!: string;
-  @Prop({ default: "standard" }) private topAppMode!: boolean;
+  @Prop({ default: "standard" }) private topAppMode!: string;
   @Prop({ default: "Title" }) private topAppTitle!: string;
   @Prop({ default: false }) private drawer!: boolean;
   @Prop({ default: null }) private drawerItems!: any[];
@@ -149,26 +149,36 @@ export default class LayoutApp extends Vue {
     display: flex;
     width: 100%;
     height: 100%;
-  }
 
-  .mdc-drawer-app-content {
-    flex: auto;
-    overflow: auto;
-    position: relative;
-  }
+    .mdc-drawer-app-content {
+      flex: auto;
+      overflow: auto;
+      position: relative;
 
-  .main-content {
-    overflow: auto;
-    height: 100%;
-  }
+      .app-bar {
+        position: absolute;
+      }
 
-  .app-bar {
-    position: absolute;
-  }
-}
+      .main-content {
+        height: 100%;
+      }
+    }
 
-.tee {
-  width: 100%;
-  height: 2000px;
+    .mdc-top-app-bar--fixed {
+      position: fixed !important;
+    }
+
+    .mdc-top-app-bar--prominent + #main-content .mdc-top-app-bar--fixed-adjust {
+      padding-top: 128px;
+    }
+
+    .mdc-top-app-bar--short + #main-content .mdc-top-app-bar--fixed-adjust {
+      padding-top: 56px;
+    }
+
+    .mdc-top-app-bar--dense + #main-content .mdc-top-app-bar--fixed-adjust {
+      padding-top: 48px;
+    }
+  }
 }
 </style>
