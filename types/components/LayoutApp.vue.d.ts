@@ -10,6 +10,28 @@ export default class LayoutApp extends Vue {
     readonly drawerModal: any;
     readonly drawerSide: any;
     readonly topAppBar: any;
+    /**
+     * return the active modal.
+     */
+    private getDrawerActive;
+    /**
+     * When click on topAppBar menu, open or close modal
+     */
     clickMenu(): void;
+    /**
+     * emit event on drawer item clicked.
+     */
+    clickDrawerItem(index: any): void;
+    /**
+     * emit event on topAppBar title clicked.
+     */
     clickTitle(): void;
+    /**
+     * open the drawer modal.
+     */
+    openDrawer(): void;
+    /**
+     * close the drawer modal.
+     */
+    closeDrawer(): void;
 }

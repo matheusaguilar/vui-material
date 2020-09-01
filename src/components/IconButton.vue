@@ -26,7 +26,7 @@ export default class IconButton extends Vue {
   @Prop({ default: "" }) private icon!: string;
   @Prop({ default: "" }) private iconOn!: string;
 
-  private element = new VComponent();
+  public element = new VComponent();
   private on = false;
 
   changeOn() {

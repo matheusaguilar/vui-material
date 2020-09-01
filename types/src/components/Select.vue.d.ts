@@ -1,4 +1,5 @@
 import { Vue } from "vue-property-decorator";
+import { VComponent } from "@/ts/VComponent";
 export default class Select extends Vue {
     private id;
     private value;
@@ -7,7 +8,7 @@ export default class Select extends Vue {
     private shaped;
     private required;
     private items;
-    private element;
+    element: VComponent;
     private itemsParsed;
     get variantClass(): " mdc-select--outlined" | " mdc-select--filled";
     get requiredClass(): "" | " mdc-select--required";

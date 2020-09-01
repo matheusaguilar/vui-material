@@ -26,7 +26,7 @@ export default class Chip extends Vue {
   @Prop({ default: "round" }) private variant!: string;
   @Prop({ default: "" }) private leftIcon!: string;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   get chipClass() {
     return this.variant == "shaped" ? " mdc-chip-shaped" : "";

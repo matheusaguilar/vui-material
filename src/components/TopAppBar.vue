@@ -43,7 +43,7 @@ export default class TopAppBar extends Vue {
   @Prop({ default: false }) private menu!: boolean;
   @Prop({ default: "Title" }) private title!: string;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   private variantClassesMap: any = {
     standard: "",

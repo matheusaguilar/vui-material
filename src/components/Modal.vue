@@ -56,7 +56,7 @@ export default class Modal extends Vue {
   @Prop({ default: "No" }) private labelNo!: string;
   @Prop({ default: "Yes" }) private labelYes!: string;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   private noAction() {
     this.$emit("no");

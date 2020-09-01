@@ -1,5 +1,4 @@
 import { Vue } from "vue-property-decorator";
-import { VComponent } from "@/ts/VComponent";
 export default class TextArea extends Vue {
     private id;
     private value;
@@ -11,7 +10,7 @@ export default class TextArea extends Vue {
     private title;
     private maxlength;
     private minlength;
-    element: VComponent;
+    private element;
     get variantClass(): " mdc-text-field--outlined" | " mdc-text-field--filled";
     onValueChanged(value: string): void;
     inputListeners(): Record<string, Function | Function[]> & {

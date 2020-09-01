@@ -1,5 +1,4 @@
 import { Vue } from "vue-property-decorator";
-import { VComponent } from "@/ts/VComponent";
 export default class Modal extends Vue {
     private id;
     private title;
@@ -7,7 +6,7 @@ export default class Modal extends Vue {
     private simple;
     private labelNo;
     private labelYes;
-    element: VComponent;
+    private element;
     private noAction;
     private yesAction;
     open(): void;

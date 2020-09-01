@@ -39,7 +39,7 @@ export default class Button extends Vue {
   @Prop({ default: "" }) private rightIcon!: string;
   @Prop({ default: false }) private disabled!: boolean;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   private classMap: any = {
     text: "",

@@ -33,7 +33,7 @@ export default class LinearProgress extends Vue {
   @Prop({ default: true }) private start!: boolean;
 
   private isClosed = false;
-  private element = new VComponent();
+  public element = new VComponent();
 
   get isClosedClass() {
     return this.isClosed ? " mdc-linear-progress--closed" : "";

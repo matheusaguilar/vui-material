@@ -33,7 +33,7 @@ export default class RadioButton extends Vue {
   @Prop({ default: null }) private val!: string;
   @Prop({ default: "Label" }) private label!: string;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   get isChecked() {
     return this.value === this.val;

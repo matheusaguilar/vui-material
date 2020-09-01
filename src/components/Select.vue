@@ -1,5 +1,11 @@
 <template>
   <div class="select-container" :id="id" :[element.dataid]="'select' + _uid">
+    <input
+      class="mdc-select-input-hide"
+      :id="'select-hidden' + _uid"
+      :required="required"
+      tabindex="-1"
+    />
     <div :class="'mdc-select' + variantClass + requiredClass">
       <div
         class="mdc-select__anchor"
@@ -84,7 +90,7 @@
 </template>
 
 <script lang="ts" scoped>
-import { Vue } from "vue-property-decorator";
+import { Vue, Watch } from "vue-property-decorator";
 import { VComponent } from "@/ts/VComponent";
 import { Component, Prop } from "vue-property-decorator";
 import { MDCSelect } from "@material/select";
@@ -99,7 +105,7 @@ export default class Select extends Vue {
   @Prop({ default: false }) private required!: boolean;
   @Prop({ default: [] }) private items!: any[];
 
-  private element = new VComponent();
+  public element = new VComponent();
   private itemsParsed: any;
 
   get variantClass() {
@@ -133,6 +139,14 @@ export default class Select extends Vue {
     );
   }
 
+  @Watch("value")
+  onValueChanged(value: string) {
+    if (this.element?.mdc) {
+      this.element.mdc.selectedIndex = value;
+      this.element.mdc.value = this.itemsParsed[value].name;
+    }
+  }
+
   mounted() {
     this.element.dom = document.querySelector(
       `div[${this.element.dataid}=select${this._uid}]`
@@ -140,6 +154,7 @@ export default class Select extends Vue {
 
     if (this.element.dom) {
       const select = this.element.dom.querySelector(".mdc-select");
+      const input = this.element.dom.querySelector("input");
       if (select) {
         this.element.mdc = new MDCSelect(select);
 
@@ -149,6 +164,7 @@ export default class Select extends Vue {
         }
 
         this.element.mdc.listen("MDCSelect:change", () => {
+          input.value = this.element.mdc.value;
           this.$emit("change", {
             index: this.element.mdc.selectedIndex,
             value: this.element.mdc.value
@@ -170,6 +186,12 @@ export default class Select extends Vue {
 
 .select-container {
   min-width: 240px;
+
+  .mdc-select-input-hide {
+    opacity: 0;
+    width: 0px;
+    height: 0px;
+  }
 
   //fix to container
   .mdc-select {

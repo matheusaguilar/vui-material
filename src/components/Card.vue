@@ -161,7 +161,7 @@ export default class Card extends Vue {
   @Prop({ default: "Description" }) private description!: string;
   @Prop({ default: false }) private action!: boolean;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   mounted() {
     this.element.dom = document.querySelector(

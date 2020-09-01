@@ -15,7 +15,7 @@ import { MDCRipple } from "@material/ripple";
 export default class List extends Vue {
   @Prop() private id!: string;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   mounted() {
     this.element.dom = document.querySelector(

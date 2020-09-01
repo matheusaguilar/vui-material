@@ -131,7 +131,7 @@ export default class DataTable extends Vue {
   @Prop({ default: () => [] }) private data!: any[];
   @Prop({ default: true }) private simple!: boolean;
 
-  private element = new VComponent();
+  public element = new VComponent();
   private headParsed: any = [];
 
   private isHeadNumber(item: any) {

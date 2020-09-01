@@ -15,7 +15,7 @@ export default class LayoutGridCell extends Vue {
   @Prop({ default: "8" }) private tablet!: string;
   @Prop({ default: "4" }) private phone!: string;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   get classes() {
     return (

@@ -13,7 +13,7 @@ import { Component, Prop } from "vue-property-decorator";
 export default class LayoutGrid extends Vue {
   @Prop() private id!: string;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   mounted() {
     this.element.dom = document.querySelector(

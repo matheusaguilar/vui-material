@@ -61,7 +61,7 @@ export default class TextArea extends Vue {
   @Prop({ default: null }) private maxlength!: string;
   @Prop({ default: null }) private minlength!: string;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   get variantClass() {
     return this.variant == "outlined"

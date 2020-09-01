@@ -35,7 +35,7 @@ export default class FabButton extends Vue {
   @Prop({ default: null }) private leftIcon!: string;
   @Prop({ default: null }) private rightIcon!: string;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   private classMap: any = {
     standard: "",

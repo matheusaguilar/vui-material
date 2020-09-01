@@ -38,7 +38,7 @@ export default class Menu extends Vue {
   @Prop() private id!: string;
   @Prop({ default: null }) private items!: string[];
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   clicked(index: any) {
     this.$emit("click", index);

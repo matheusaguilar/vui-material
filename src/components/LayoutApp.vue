@@ -6,6 +6,7 @@
       variant="modal"
       v-if="drawer && drawerItems"
       :items="drawerItems"
+      @click="clickDrawerItem"
     >
       <template v-slot:header>
         <slot name="drawer-header"></slot>
@@ -23,6 +24,7 @@
         ref="drawerSide"
         v-if="drawer && drawerItems"
         :items="drawerItems"
+        @click="clickDrawerItem"
       >
         <template v-slot:header>
           <slot name="drawer-header"></slot>
@@ -80,18 +82,60 @@ export default class LayoutApp extends Vue {
   @Ref("drawerSide") readonly drawerSide!: any;
   @Ref("topAppBar") readonly topAppBar!: any;
 
-  clickMenu() {
-    if (window.innerWidth < this.drawerChange) {
-      this.drawerSide.close();
-      this.drawerModal.change();
-    } else {
-      this.drawerModal.close();
-      this.drawerSide.change();
-    }
+  /**
+   * return the active modal.
+   */
+  private getDrawerActive() {
+    return window.innerWidth < this.drawerChange
+      ? this.drawerModal
+      : this.drawerSide;
   }
 
+  /**
+   * When click on topAppBar menu, open or close modal
+   */
+  clickMenu() {
+    const drawer = this.getDrawerActive();
+    const state = drawer.element.mdc.open;
+
+    this.drawerSide.close();
+    this.drawerModal.close();
+
+    if (!state) {
+      drawer.change();
+    }
+
+    this.$emit("drawer", !state);
+  }
+
+  /**
+   * emit event on drawer item clicked.
+   */
+  clickDrawerItem(index: any) {
+    this.$emit("drawer-item", index);
+  }
+
+  /**
+   * emit event on topAppBar title clicked.
+   */
   clickTitle() {
     this.$emit("title");
+  }
+
+  /**
+   * open the drawer modal.
+   */
+  openDrawer() {
+    const drawer = this.getDrawerActive();
+    drawer.open();
+  }
+
+  /**
+   * close the drawer modal.
+   */
+  closeDrawer() {
+    const drawer = this.getDrawerActive();
+    drawer.close();
   }
 }
 </script>

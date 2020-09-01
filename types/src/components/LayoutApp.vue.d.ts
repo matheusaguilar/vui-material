@@ -6,6 +6,7 @@ export default class LayoutApp extends Vue {
     private drawer;
     private drawerItems;
     private drawerChange;
+    private title;
     readonly drawerModal: any;
     readonly drawerSide: any;
     readonly topAppBar: any;

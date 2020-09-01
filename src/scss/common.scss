@@ -1,9 +1,11 @@
-// @use "@material/theme" with (
-//   $primary: #7bc0ee,
-//   $secondary: #816424,
-//   $background: rgb(31, 31, 31),
-//   $surface: rgb(121, 121, 121),
-//   $on-primary: #d12f3d,
-//   $on-secondary: #1f0679,
-//   $on-surface: #fff,
-// );
+@use "@material/theme" with (
+  $primary: #0097a7,
+  $secondary: #7c4dff,
+  // $background: rgb(44, 44, 44),
+  // $surface: rgb(255, 255, 255),
+  // $on-primary: #ffffff,
+  // $on-secondary: #4d3b17,
+  // $on-surface: rgb(255, 21, 21),
+);
+
+// #7bc0ee

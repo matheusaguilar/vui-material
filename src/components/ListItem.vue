@@ -39,7 +39,7 @@ export default class ListItem extends Vue {
   @Prop({ default: "" }) private tabindex!: string;
   @Prop({ default: false }) private active!: boolean;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   get twoLineClass() {
     return this.description ? " list--two-line-item" : "";

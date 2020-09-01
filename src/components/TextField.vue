@@ -21,6 +21,7 @@
       <input
         :type="type"
         :id="'textfield-' + _uid"
+        :name="name"
         class="mdc-text-field__input"
         :aria-controls="helperId"
         :aria-describedby="helperId"
@@ -61,6 +62,7 @@
       <input
         :type="type"
         :id="'textfield-' + _uid"
+        :name="name"
         class="mdc-text-field__input"
         :aria-controls="helperId"
         :aria-describedby="helperId"
@@ -98,6 +100,7 @@
       <input
         :type="type"
         :id="'textfield-' + _uid"
+        :name="name"
         class="mdc-text-field__input"
         :placeholder="label"
         :aria-label="label"
@@ -123,7 +126,7 @@
       >
         {{ helperText }}
       </p>
-      <div class="mdc-text-field-character-counter" v-if="maxlength">
+      <div class="mdc-text-field-character-counter" v-if="maxlength && counter">
         0 / {{ maxlength }}
       </div>
     </div>
@@ -144,6 +147,7 @@ export default class TextField extends Vue {
   @Prop({ default: null }) private value!: string;
   @Prop({ default: "filled" }) private variant!: string;
   @Prop({ default: "Label" }) private label!: string;
+  @Prop({ default: "" }) private name!: string;
   @Prop({ default: false }) private shaped!: boolean;
   @Prop({ default: "" }) private leftIcon!: string;
   @Prop({ default: "" }) private rightIcon!: string;
@@ -154,8 +158,9 @@ export default class TextField extends Vue {
   @Prop({ default: null }) private title!: string;
   @Prop({ default: null }) private maxlength!: string;
   @Prop({ default: null }) private minlength!: string;
+  @Prop({ default: false }) private counter!: boolean;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   get shapedClass() {
     return this.shaped ? " mdc-shaped" : "";
@@ -187,8 +192,8 @@ export default class TextField extends Vue {
 
   @Watch("value")
   onValueChanged(value: string) {
-    if (this.element?.mdc) {
-      this.element.mdc.value = value;
+    if (this.element?.mdc?.textField) {
+      this.element.mdc.textField.value = value;
     }
   }
 

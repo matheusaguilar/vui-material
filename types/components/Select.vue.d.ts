@@ -1,4 +1,5 @@
 import { Vue } from "vue-property-decorator";
+import { VComponent } from "@/ts/VComponent";
 export default class Select extends Vue {
     private id;
     private value;
@@ -7,12 +8,13 @@ export default class Select extends Vue {
     private shaped;
     private required;
     private items;
-    private element;
+    element: VComponent;
     private itemsParsed;
     get variantClass(): " mdc-select--outlined" | " mdc-select--filled";
     get requiredClass(): "" | " mdc-select--required";
     selectedClass(selected: any): "" | " mdc-list-item--selected";
     disabledClass(disabled: any): "" | " mdc-list-item--disabled";
     created(): void;
+    onValueChanged(value: string): void;
     mounted(): void;
 }

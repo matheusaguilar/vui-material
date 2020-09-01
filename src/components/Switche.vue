@@ -31,7 +31,7 @@ export default class IconButton extends Vue {
   @Prop({ default: null }) private value!: string;
   @Prop({ default: "Label" }) private label!: string;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   inputListeners() {
     return Object.assign({}, this.$listeners, {

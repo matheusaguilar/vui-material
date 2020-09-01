@@ -51,7 +51,7 @@ export default class Drawer extends Vue {
   @Prop({ default: "dismissible" }) private variant!: string;
   @Prop({ default: null }) private items!: any[];
 
-  private element = new VComponent();
+  public element = new VComponent();
   private itemsParsed: any = [];
   private variantClassesMap: any = {
     dismissible: " mdc-drawer--dismissible",

@@ -1,7 +1,7 @@
 <template>
   <div class="mdc-snackbar" :id="id" :[element.dataid]="'snackbar' + _uid">
     <div class="mdc-snackbar__surface">
-      <div class="mdc-snackbar__label" role="status" aria-live="polite">
+      <div class="mdc-snackbar__label" role="status">
         {{ text }}
       </div>
       <div class="mdc-snackbar__actions" v-if="action">
@@ -30,7 +30,7 @@ export default class Snackbar extends Vue {
   @Prop({ default: "Text" }) private text!: string;
   @Prop({ default: "Action" }) private action!: string;
 
-  private element = new VComponent();
+  public element = new VComponent();
 
   open() {
     if (this.element.mdc) {
@@ -56,4 +56,9 @@ export default class Snackbar extends Vue {
 
 <style lang="scss">
 @use "@material/snackbar/mdc-snackbar";
+@import "@material/theme/mdc-theme";
+
+.mdc-snackbar__action:not(:disabled) {
+  color: $mdc-theme-secondary;
+}
 </style>
