@@ -14,11 +14,11 @@
         <a
           :class="'mdc-list-item' + activeClass(item.active)"
           :tabindex="index"
-          :href="isFunction(item.href) ? '#' : item.href"
+          :href="item.href"
           aria-current="page"
           v-for="(item, index) in itemsParsed"
           :key="index"
-          @click="callHref($event, item.href)"
+          @click="callAction($event, item.action)"
         >
           <span class="mdc-list-item__ripple"></span>
           <i
@@ -76,9 +76,9 @@ export default class Drawer extends Vue {
     return !!(obj && obj.constructor && obj.call && obj.apply);
   }
 
-  callHref(event: any, href: any) {
-    if (this.isFunction(href)) {
-      href(event);
+  callAction(event: any, action: any) {
+    if (action) {
+      action(event);
     }
   }
 
@@ -107,7 +107,8 @@ export default class Drawer extends Vue {
           name: "",
           icon: null,
           active: false,
-          href: "#"
+          href: "#",
+          action: null
         },
         item
       )
