@@ -2,11 +2,11 @@
   <div class="layout-container">
     <!--DrawerModal-->
     <Drawer
+      id="layoutapp-drawer-modal"
       ref="drawerModal"
       variant="modal"
-      v-if="drawer && drawerItems"
+      v-if="drawer || drawerItems"
       :items="drawerItems"
-      @click="clickDrawerItem"
     >
       <template v-slot:header>
         <slot name="drawer-header"></slot>
@@ -21,10 +21,10 @@
     <div class="topappbar-container">
       <!--Drawer-->
       <Drawer
+        id="layoutapp-drawer"
         ref="drawerSide"
-        v-if="drawer && drawerItems"
+        v-if="drawer || drawerItems"
         :items="drawerItems"
-        @click="clickDrawerItem"
       >
         <template v-slot:header>
           <slot name="drawer-header"></slot>
@@ -38,11 +38,12 @@
       <div class="mdc-drawer-app-content">
         <!--TopAppBar-->
         <TopAppBar
+          id="layoutapp-topappbar"
           :variant="topAppMode"
           :title="title"
-          :menu="drawer && drawerItems ? true : false"
+          :titleHref="titleHref"
+          :menu="drawer || drawerItems"
           @menu="clickMenu"
-          @title="clickTitle"
         >
           <slot name="topappbar"></slot>
         </TopAppBar>
@@ -77,6 +78,7 @@ export default class LayoutApp extends Vue {
   @Prop({ default: null }) private drawerItems!: any[];
   @Prop({ default: 800 }) private drawerChange!: number;
   @Prop({ default: "Title" }) private title!: string;
+  @Prop({ default: null }) private titleHref!: string;
 
   @Ref("drawerModal") readonly drawerModal!: any;
   @Ref("drawerSide") readonly drawerSide!: any;
@@ -106,20 +108,6 @@ export default class LayoutApp extends Vue {
     }
 
     this.$emit("drawer", !state);
-  }
-
-  /**
-   * emit event on drawer item clicked.
-   */
-  clickDrawerItem(index: any) {
-    this.$emit("drawer-item", index);
-  }
-
-  /**
-   * emit event on topAppBar title clicked.
-   */
-  clickTitle() {
-    this.$emit("title");
   }
 
   /**

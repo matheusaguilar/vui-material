@@ -8,6 +8,7 @@
       <section
         class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start"
       >
+        <!--Menu button-->
         <button
           v-if="menu"
           @click="clickMenu"
@@ -15,9 +16,15 @@
         >
           menu
         </button>
-        <span class="mdc-top-app-bar__title" @click="clickTitle">{{
-          title
-        }}</span>
+
+        <!--Title-->
+        <a
+          :href="titleHref"
+          class="mdc-top-app-bar__title topappbar-title-redirect"
+          v-if="titleHref"
+          >{{ title }}</a
+        >
+        <span class="mdc-top-app-bar__title" v-else>{{ title }}</span>
       </section>
 
       <section
@@ -42,6 +49,7 @@ export default class TopAppBar extends Vue {
   @Prop({ default: "standard" }) private variant!: string;
   @Prop({ default: false }) private menu!: boolean;
   @Prop({ default: "Title" }) private title!: string;
+  @Prop({ default: null }) private titleHref!: string;
 
   public element = new VComponent();
 
@@ -63,10 +71,6 @@ export default class TopAppBar extends Vue {
     this.$emit("menu");
   }
 
-  clickTitle() {
-    this.$emit("title");
-  }
-
   mounted() {
     this.element.dom = document.querySelector(
       `header[${this.element.dataid}=topappbar${this._uid}]`
@@ -82,6 +86,13 @@ export default class TopAppBar extends Vue {
 <style lang="scss">
 @use "@material/icon-button";
 @use "@material/top-app-bar/mdc-top-app-bar";
+@import "@material/theme/mdc-theme";
 
 @include icon-button.core-styles;
+
+.mdc-top-app-bar {
+  .topappbar-title-redirect {
+    color: $mdc-theme-on-primary;
+  }
+}
 </style>

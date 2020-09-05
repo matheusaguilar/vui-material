@@ -1,21 +1,28 @@
 <template>
   <div id="app" class="app mdc-theme--background">
-    <LayoutApp top-app-mode="standard" :drawer="true" :drawerItems="[]">
+    <LayoutApp
+      id="layoutApp"
+      top-app-mode="standard"
+      titleHref="/"
+      :drawer="true"
+      :drawerItems="drawerItems"
+    >
       <template v-slot:drawer-header>
         <h3 class="mdc-drawer__title">Mail</h3>
         <h6 class="mdc-drawer__subtitle">email@material.io</h6>
       </template>
 
-      <template v-slot:drawer-body>
-        <List>
+      <!-- <template v-slot:drawer-body>
+        <List id="listitems">
           <ListItem
-            v-for="(item, index) in 45"
+            :id="'listitem-' + index"
+            v-for="(item, index) in 8"
             :key="index"
             :text="'Item ' + index"
             :tabindex="index"
           />
         </List>
-      </template>
+      </template> -->
 
       <template v-slot:topappbar>
         <button
@@ -60,21 +67,29 @@ import ListItem from "./components/ListItem.vue";
 })
 export default class AppLayout extends Vue {
   private drawerItems = [
-    { name: "Item 1", active: true, href: "#", icon: "star" },
-    { name: "Item 2", active: false, href: "#", icon: "email" },
-    { name: "Item 3", active: false, href: "#", icon: "favorite" },
-    { name: "Item 4", active: false, href: "#", icon: "house" }
+    { name: "Item 1", active: true, href: "/1", icon: "star" },
+    { name: "Item 2", active: false, href: "/2", icon: "email" },
+    { name: "Item 3", active: false, href: "/3", icon: "favorite" },
+    { name: "Item 4", active: false, href: "/4", icon: "house" },
+    {
+      name: "Sair",
+      active: false,
+      href: () => {
+        console.log("hmmm");
+      },
+      icon: "house"
+    }
   ];
 
   created() {
-    for (let i = 0; i < 30; i++) {
-      this.drawerItems.push({
-        name: `Item ${i + 4}`,
-        active: false,
-        href: "#",
-        icon: "star"
-      });
-    }
+    // for (let i = 0; i < 10; i++) {
+    //   this.drawerItems.push({
+    //     name: `Item ${i + 4}`,
+    //     active: false,
+    //     href: "#",
+    //     icon: "star"
+    //   });
+    // }
   }
 }
 </script>
