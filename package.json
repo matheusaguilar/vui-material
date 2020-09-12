@@ -7,6 +7,7 @@
   "scripts": {
     "serve": "vue-cli-service serve src/app.ts",
     "build": "vue-cli-service build --target lib --name vui-material src/ts/main.ts",
+    "build-page": "vue-cli-service build src/app.ts buildpage",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
