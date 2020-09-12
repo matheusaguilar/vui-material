@@ -7,7 +7,7 @@
       <LayoutGridInner>
         <LayoutGridCell desktop="3" tablet="4" phone="4">
           <div class="component-info">raised</div>
-          <Button variant="raised" />
+          <Button variant="raised" @click="logEvent" />
         </LayoutGridCell>
 
         <LayoutGridCell desktop="3" tablet="4" phone="4">

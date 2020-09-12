@@ -12,5 +12,8 @@ export default class FabButton extends Vue {
     private classMap;
     get buttonClass(): any;
     get miniClass(): "" | " mdc-fab--mini";
+    inputListeners(): Record<string, Function | Function[]> & {
+        click: (event: any) => void;
+    };
     mounted(): void;
 }

@@ -3,7 +3,7 @@
     class="mdc-icon-button"
     :id="id"
     :[element.dataid]="'button' + _uid"
-    @click="changeOn()"
+    @click="changeOn"
   >
     <i class="material-icons mdc-icon-button__icon">{{ on ? iconOn : icon }}</i>
     <i
@@ -29,10 +29,11 @@ export default class IconButton extends Vue {
   public element = new VComponent();
   private on = false;
 
-  changeOn() {
+  changeOn(event: any) {
     if (this.iconOn) {
       this.on = !this.on;
     }
+    this.$emit("click", event);
   }
 
   mounted() {

@@ -1,4 +1,5 @@
 import { Vue } from "vue-property-decorator";
+import { VComponent } from "@/ts/VComponent";
 export default class Button extends Vue {
     private id;
     private type;
@@ -7,8 +8,11 @@ export default class Button extends Vue {
     private leftIcon;
     private rightIcon;
     private disabled;
-    private element;
+    element: VComponent;
     private classMap;
     get buttonClass(): any;
+    inputListeners(): Record<string, Function | Function[]> & {
+        click: (event: any) => void;
+    };
     mounted(): void;
 }

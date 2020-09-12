@@ -1,6 +1,11 @@
 <template>
   <div class="mdc-touch-target-wrapper" :[element.dataid]="'button' + _uid">
-    <button :type="type" :class="'mdc-fab' + buttonClass + miniClass" :id="id">
+    <button
+      :type="type"
+      :class="'mdc-fab' + buttonClass + miniClass"
+      :id="id"
+      v-on="inputListeners()"
+    >
       <div class="mdc-fab__ripple"></div>
       <i
         class="material-icons mdc-fab__icon"
@@ -48,6 +53,14 @@ export default class FabButton extends Vue {
 
   get miniClass() {
     return this.mini ? " mdc-fab--mini" : "";
+  }
+
+  inputListeners() {
+    return Object.assign({}, this.$listeners, {
+      click: (event: any) => {
+        this.$emit("click", event);
+      }
+    });
   }
 
   mounted() {

@@ -1,4 +1,5 @@
 import { Vue } from "vue-property-decorator";
+import { VComponent } from "@/ts/VComponent";
 export default class Card extends Vue {
     private id;
     private variant;
@@ -7,6 +8,6 @@ export default class Card extends Vue {
     private subtitle;
     private description;
     private action;
-    private element;
+    element: VComponent;
     mounted(): void;
 }

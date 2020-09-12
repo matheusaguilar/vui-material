@@ -6,6 +6,6 @@ export default class IconButton extends Vue {
     private iconOn;
     element: VComponent;
     private on;
-    changeOn(): void;
+    changeOn(event: any): void;
     mounted(): void;
 }

@@ -5,6 +5,7 @@
     :id="id"
     :[element.dataid]="'button' + _uid"
     :disabled="disabled"
+    v-on="inputListeners()"
   >
     <div class="mdc-button__ripple"></div>
     <i
@@ -50,6 +51,14 @@ export default class Button extends Vue {
 
   get buttonClass() {
     return this.classMap[this.variant] ? this.classMap[this.variant] : "";
+  }
+
+  inputListeners() {
+    return Object.assign({}, this.$listeners, {
+      click: (event: any) => {
+        this.$emit("click", event);
+      }
+    });
   }
 
   mounted() {
