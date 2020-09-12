@@ -211,35 +211,41 @@
       <LayoutGridInner>
         <LayoutGridCell desktop="4" tablet="4" phone="4">
           <div class="component-info">Card</div>
-          <Card img="./assets/porto-seguro-brazil.jpg"> </Card>
+          <Card :img="`${publicPath}assets/porto-seguro-brazil.jpg`" />
         </LayoutGridCell>
 
         <LayoutGridCell desktop="4" tablet="4" phone="4">
           <div class="component-info">Card basic-overmidia</div>
           <Card
-            img="./assets/porto-seguro-brazil.jpg"
+            :img="`${publicPath}assets/porto-seguro-brazil.jpg`"
             variant="basic-overmedia"
-          >
-          </Card>
+          />
         </LayoutGridCell>
 
         <LayoutGridCell desktop="4" tablet="4" phone="4">
           <div class="component-info">Card basic-header</div>
-          <Card img="./assets/porto-seguro-brazil.jpg" variant="basic-header">
-          </Card>
+          <Card
+            :img="`${publicPath}assets/porto-seguro-brazil.jpg`"
+            variant="basic-header"
+          />
         </LayoutGridCell>
 
         <LayoutGridCell desktop="4" tablet="4" phone="4">
           <div class="component-info">Card action</div>
-          <Card img="./assets/porto-seguro-brazil.jpg" action="true">
+          <Card
+            :img="`${publicPath}assets/porto-seguro-brazil.jpg`"
+            action="true"
+          >
             <Button />
           </Card>
         </LayoutGridCell>
 
         <LayoutGridCell desktop="4" tablet="4" phone="4">
           <div class="component-info">Card image-text</div>
-          <Card img="./assets/porto-seguro-brazil.jpg" variant="image-text">
-          </Card>
+          <Card
+            :img="`${publicPath}assets/porto-seguro-brazil.jpg`"
+            variant="image-text"
+          />
         </LayoutGridCell>
       </LayoutGridInner>
     </LayoutGrid>
@@ -435,6 +441,8 @@ export default class App extends Vue {
     ["Ice cream sandwich", 37, 4.3, "I like ice cream more"],
     ["Amber", 37, 1.3, "I like ice cream more"]
   ];
+
+  publicPath = process.env.BASE_URL;
 
   logEvent(data: any) {
     console.log(data);
