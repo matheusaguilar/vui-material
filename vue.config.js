@@ -21,7 +21,7 @@ module.exports = {
     }
   },
   chainWebpack: config => {
-    if (buildMode === buildLib) {
+    if (buildMode === buildLib && process.env.NODE_ENV === "production") {
       config.module
         .rule("ts")
         .use("ts-loader")
@@ -33,13 +33,11 @@ module.exports = {
           return opts;
         });
 
-      if (process.env.NODE_ENV === "production") {
-        config.externals([
-          "vue",
-          "vue-class-component",
-          "vue-property-decorator"
-        ]);
-      }
+      config.externals([
+        "vue",
+        "vue-class-component",
+        "vue-property-decorator"
+      ]);
     }
   },
   parallel: false,
