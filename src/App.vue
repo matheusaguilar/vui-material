@@ -211,31 +211,34 @@
       <LayoutGridInner>
         <LayoutGridCell desktop="4" tablet="4" phone="4">
           <div class="component-info">Card</div>
-          <Card img="/assets/porto-seguro-brazil.jpg"> </Card>
+          <Card img="./assets/porto-seguro-brazil.jpg"> </Card>
         </LayoutGridCell>
 
         <LayoutGridCell desktop="4" tablet="4" phone="4">
           <div class="component-info">Card basic-overmidia</div>
-          <Card img="/assets/porto-seguro-brazil.jpg" variant="basic-overmedia">
+          <Card
+            img="./assets/porto-seguro-brazil.jpg"
+            variant="basic-overmedia"
+          >
           </Card>
         </LayoutGridCell>
 
         <LayoutGridCell desktop="4" tablet="4" phone="4">
           <div class="component-info">Card basic-header</div>
-          <Card img="/assets/porto-seguro-brazil.jpg" variant="basic-header">
+          <Card img="./assets/porto-seguro-brazil.jpg" variant="basic-header">
           </Card>
         </LayoutGridCell>
 
         <LayoutGridCell desktop="4" tablet="4" phone="4">
           <div class="component-info">Card action</div>
-          <Card img="/assets/porto-seguro-brazil.jpg" action="true">
+          <Card img="./assets/porto-seguro-brazil.jpg" action="true">
             <Button />
           </Card>
         </LayoutGridCell>
 
         <LayoutGridCell desktop="4" tablet="4" phone="4">
           <div class="component-info">Card image-text</div>
-          <Card img="/assets/porto-seguro-brazil.jpg" variant="image-text">
+          <Card img="./assets/porto-seguro-brazil.jpg" variant="image-text">
           </Card>
         </LayoutGridCell>
       </LayoutGridInner>
