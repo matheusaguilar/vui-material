@@ -8,6 +8,7 @@ module.exports = {
   devServer: {
     port: 3000
   },
+  publicPath: buildMode === buildPage ? "/vui-material/" : "/",
   css: {
     loaderOptions: {
       sass: {
