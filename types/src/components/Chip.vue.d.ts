@@ -8,4 +8,7 @@ export default class Chip extends Vue {
     element: VComponent;
     get chipClass(): "" | " mdc-chip-shaped";
     mounted(): void;
+    inputListeners(): Record<string, Function | Function[]> & {
+        input: (event: any) => void;
+    };
 }

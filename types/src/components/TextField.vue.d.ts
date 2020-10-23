@@ -17,6 +17,7 @@ export default class TextField extends Vue {
     private title;
     private maxlength;
     private minlength;
+    private counter;
     element: VComponent;
     get shapedClass(): "" | " mdc-shaped";
     get leftIconClass(): "" | " mdc-text-left-icon";

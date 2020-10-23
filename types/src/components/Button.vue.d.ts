@@ -11,5 +11,8 @@ export default class Button extends Vue {
     element: VComponent;
     private classMap;
     get buttonClass(): any;
+    inputListeners(): Record<string, Function | Function[]> & {
+        click: (event: any) => void;
+    };
     mounted(): void;
 }

@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="mdc-listitem-container">
     <li
       :class="'mdc-list-item' + twoLineClass + activeClass"
       :id="id"
       :tabindex="tabindex"
+      v-on="inputListeners()"
     >
       <span class="mdc-list-item__ripple"></span>
       <span
@@ -48,24 +49,34 @@ export default class ListItem extends Vue {
   get activeClass() {
     return this.active ? " mdc-list-item--activated" : "";
   }
+
+  inputListeners() {
+    return Object.assign({}, this.$listeners, {
+      input: (event: any) => {
+        this.$emit("input", event.target.value);
+      }
+    });
+  }
 }
 </script>
 
 <style lang="scss">
-.list--two-line-item {
-  height: 72px;
+.mdc-listitem-container {
+  .list--two-line-item {
+    height: 72px;
 
-  .mdc-list-item__graphic {
-    margin-left: 0;
-    margin-right: 16px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
+    .mdc-list-item__graphic {
+      margin-left: 0;
+      margin-right: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
 
-  .mdc-list-item__text {
-    -ms-flex-item-align: start;
-    align-self: flex-start;
+    .mdc-list-item__text {
+      -ms-flex-item-align: start;
+      align-self: flex-start;
+    }
   }
 }
 </style>

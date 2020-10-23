@@ -11,4 +11,7 @@ export default class ListItem extends Vue {
     element: VComponent;
     get twoLineClass(): "" | " list--two-line-item";
     get activeClass(): "" | " mdc-list-item--activated";
+    inputListeners(): Record<string, Function | Function[]> & {
+        input: (event: any) => void;
+    };
 }

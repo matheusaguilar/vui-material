@@ -10,6 +10,7 @@ import IconButton from "../components/IconButton.vue";
 import TextField from "../components/TextField.vue";
 import TextArea from "../components/TextArea.vue";
 import Select from "../components/Select.vue";
+import AutoComplete from "../components/AutoComplete.vue";
 import Checkbox from "../components/Checkbox.vue";
 import Switche from "../components/Switche.vue";
 import RadioButton from "../components/RadioButton.vue";
@@ -35,6 +36,7 @@ export {
   TextField,
   TextArea,
   Select,
+  AutoComplete,
   RadioButton,
   ChipGrid,
   Chip,

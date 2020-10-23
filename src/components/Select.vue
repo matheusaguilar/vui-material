@@ -106,7 +106,6 @@ export default class Select extends Vue {
   @Prop({ default: [] }) private items!: any[];
 
   public element = new VComponent();
-  private itemsParsed: any;
 
   get variantClass() {
     return this.variant == "outlined"
@@ -126,8 +125,8 @@ export default class Select extends Vue {
     return disabled ? " mdc-list-item--disabled" : "";
   }
 
-  created() {
-    this.itemsParsed = this.items?.map(item =>
+  get itemsParsed() {
+    return this.items?.map(item =>
       this.element.mergeAttributes(
         {
           name: "",
@@ -140,10 +139,9 @@ export default class Select extends Vue {
   }
 
   @Watch("value")
-  onValueChanged(value: string) {
+  onValueChanged(value: any) {
     if (this.element?.mdc) {
       this.element.mdc.selectedIndex = value;
-      this.element.mdc.value = this.itemsParsed[value].name;
     }
   }
 
@@ -158,18 +156,19 @@ export default class Select extends Vue {
       if (select) {
         this.element.mdc = new MDCSelect(select);
 
-        if (this.value) {
+        if (this.value !== null) {
           this.element.mdc.selectedIndex = this.value;
-          this.element.mdc.value = this.itemsParsed[this.value].name;
+          input.value = this.value;
         }
 
-        this.element.mdc.listen("MDCSelect:change", () => {
-          input.value = this.element.mdc.value;
+        this.element.mdc.listen("MDCSelect:change", (event: any) => {
+          const { value, index } = event.detail;
+          input.value = value;
+          this.$emit("input", index);
           this.$emit("change", {
-            index: this.element.mdc.selectedIndex,
-            value: this.element.mdc.value
+            value,
+            index
           });
-          this.$emit("input", this.element.mdc.selectedIndex);
         });
       }
     }
@@ -188,6 +187,7 @@ export default class Select extends Vue {
   min-width: 240px;
 
   .mdc-select-input-hide {
+    position: absolute;
     opacity: 0;
     width: 0px;
     height: 0px;

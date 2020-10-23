@@ -3,6 +3,7 @@
     :class="'mdc-chip' + chipClass"
     :id="id"
     :[element.dataid]="'chip' + _uid"
+    v-on="inputListeners()"
   >
     <div class="mdc-chip__ripple"></div>
     <i
@@ -36,6 +37,14 @@ export default class Chip extends Vue {
     this.element.dom = document.querySelector(
       `div[${this.element.dataid}=chip${this._uid}]`
     );
+  }
+
+  inputListeners() {
+    return Object.assign({}, this.$listeners, {
+      input: (event: any) => {
+        this.$emit("input", event.target.value);
+      }
+    });
   }
 }
 </script>

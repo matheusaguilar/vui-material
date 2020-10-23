@@ -167,7 +167,12 @@
 
         <LayoutGridCell desktop="3" tablet="4" phone="4">
           <div class="component-info">select outlined</div>
-          <Select variant="outlined" :items="['one', 'two']" />
+          <Select variant="outlined" :items="itemsSelect" />
+        </LayoutGridCell>
+
+        <LayoutGridCell desktop="3" tablet="4" phone="4">
+          <div class="component-info">AutoComplete</div>
+          <AutoComplete :search="() => autocompletItems" :start="1" />
         </LayoutGridCell>
 
         <LayoutGridCell desktop="3" tablet="4" phone="4">
@@ -267,6 +272,7 @@
             <ListItem
               text="List Item with Description"
               description="Description..."
+              @click="logEvent"
             />
             <ListItem
               text="List Item with Description and leftIcon"
@@ -388,6 +394,7 @@ import IconButton from "./components/IconButton.vue";
 import TextField from "./components/TextField.vue";
 import TextArea from "./components/TextArea.vue";
 import Select from "./components/Select.vue";
+import AutoComplete from "./components/AutoComplete.vue";
 import Checkbox from "./components/Checkbox.vue";
 import Switche from "./components/Switche.vue";
 import RadioButton from "./components/RadioButton.vue";
@@ -413,6 +420,7 @@ import LinearProgress from "./components/LinearProgress.vue";
     TextField,
     TextArea,
     Select,
+    AutoComplete,
     Checkbox,
     Switche,
     RadioButton,
@@ -440,6 +448,24 @@ export default class App extends Vue {
     ["Frozen yogurt", 24, 3.2, "Super tasty"],
     ["Ice cream sandwich", 37, 4.3, "I like ice cream more"],
     ["Amber", 37, 1.3, "I like ice cream more"]
+  ];
+
+  private itemsSelect: any[] = ["one", "two"];
+
+  private autocompletItems = [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten",
+    "html",
+    "css",
+    "js"
   ];
 
   publicPath = process.env.BASE_URL;

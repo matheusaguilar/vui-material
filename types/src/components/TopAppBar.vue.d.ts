@@ -5,10 +5,10 @@ export default class TopAppBar extends Vue {
     private variant;
     private menu;
     private title;
+    private titleHref;
     element: VComponent;
     private variantClassesMap;
     get variantClass(): any;
     clickMenu(): void;
-    clickTitle(): void;
     mounted(): void;
 }

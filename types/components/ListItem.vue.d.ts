@@ -1,4 +1,5 @@
 import { Vue } from "vue-property-decorator";
+import { VComponent } from "@/ts/VComponent";
 export default class ListItem extends Vue {
     private id;
     private text;
@@ -7,7 +8,10 @@ export default class ListItem extends Vue {
     private divider;
     private tabindex;
     private active;
-    private element;
+    element: VComponent;
     get twoLineClass(): "" | " list--two-line-item";
     get activeClass(): "" | " mdc-list-item--activated";
+    inputListeners(): Record<string, Function | Function[]> & {
+        input: (event: any) => void;
+    };
 }
