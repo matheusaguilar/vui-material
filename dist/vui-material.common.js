@@ -21202,12 +21202,12 @@ var LinearProgress_component = normalizeComponent(
 )
 
 /* harmony default export */ var components_LinearProgress = (LinearProgress_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"02f25a68-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AutoComplete.vue?vue&type=template&id=620de138&
-var AutoCompletevue_type_template_id_620de138_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"autocomplete",attrs:{"id":'autocomplete-' + _vm._uid}},[_c('div',{staticClass:"autocomplete-input"},[_c('TextField',_vm._g({attrs:{"type":_vm.type,"value":_vm.value,"variant":_vm.variant,"label":_vm.label,"name":_vm.name,"shaped":_vm.shaped,"leftIcon":_vm.leftIcon,"rightIcon":_vm.rightIcon,"helperText":_vm.helperText,"required":_vm.required,"disabled":_vm.disabled}},_vm.inputListeners()))],1),_c('ul',{staticClass:"autocomplete-result-list"}),_c('ul',{staticClass:"autocomplete-result-list autocomplete-no-result",attrs:{"visible":"false"}},[_c('li',{staticClass:"autocomplete-result"},[_vm._v(" "+_vm._s(_vm.noResultLabel)+" ")])])])}
-var AutoCompletevue_type_template_id_620de138_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"02f25a68-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AutoComplete.vue?vue&type=template&id=c11ef774&
+var AutoCompletevue_type_template_id_c11ef774_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"autocomplete",attrs:{"id":'autocomplete-' + _vm._uid}},[_c('div',{staticClass:"autocomplete-input"},[_c('TextField',_vm._g({attrs:{"type":_vm.type,"value":_vm.value,"variant":_vm.variant,"label":_vm.label,"name":_vm.name,"shaped":_vm.shaped,"leftIcon":_vm.leftIcon,"rightIcon":_vm.rightIcon,"helperText":_vm.helperText,"required":_vm.required,"disabled":_vm.disabled}},_vm.inputListeners()))],1),_c('ul',{staticClass:"autocomplete-result-list"}),_c('ul',{staticClass:"autocomplete-result-list autocomplete-no-result",attrs:{"visible":"false"}},[_c('li',{staticClass:"autocomplete-result"},[_vm._v(" "+_vm._s(_vm.noResultLabel)+" ")])])])}
+var AutoCompletevue_type_template_id_c11ef774_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/AutoComplete.vue?vue&type=template&id=620de138&
+// CONCATENATED MODULE: ./src/components/AutoComplete.vue?vue&type=template&id=c11ef774&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.includes.js
 var es_array_includes = __webpack_require__("caad");
@@ -21817,6 +21817,7 @@ var Autocomplete = function Autocomplete(root) {
 
 
 
+
 var AutoCompletevue_type_script_lang_ts_AutoComplete = /*#__PURE__*/function (_Vue) {
   _inherits(AutoComplete, _Vue);
 
@@ -21881,6 +21882,8 @@ var AutoCompletevue_type_script_lang_ts_AutoComplete = /*#__PURE__*/function (_V
           _this2.selected = result;
 
           _this2.inputElement.blur();
+
+          _this2.$emit("input", _this2.selected);
         }
       });
     }
@@ -21891,7 +21894,9 @@ var AutoCompletevue_type_script_lang_ts_AutoComplete = /*#__PURE__*/function (_V
   }, {
     key: "inputListeners",
     value: function inputListeners() {
-      return this.$listeners;
+      var events = Object.assign({}, this.$listeners);
+      delete events.input;
+      return events;
     }
     /**
      * return a string based replace with b elements on selected items.
@@ -21985,8 +21990,8 @@ var AutoCompletevue_type_style_index_0_lang_scss_ = __webpack_require__("1d6c");
 
 var AutoComplete_component = normalizeComponent(
   components_AutoCompletevue_type_script_lang_ts_,
-  AutoCompletevue_type_template_id_620de138_render,
-  AutoCompletevue_type_template_id_620de138_staticRenderFns,
+  AutoCompletevue_type_template_id_c11ef774_render,
+  AutoCompletevue_type_template_id_c11ef774_staticRenderFns,
   false,
   null,
   null,

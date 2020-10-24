@@ -103,6 +103,7 @@ export default class AutoComplete extends Vue {
       onSubmit: (result: any) => {
         this.selected = result;
         this.inputElement.blur();
+        this.$emit("input", this.selected);
       }
     } as any);
   }
@@ -111,7 +112,9 @@ export default class AutoComplete extends Vue {
    * emit the events of the TextField.
    */
   inputListeners() {
-    return this.$listeners;
+    const events = Object.assign({}, this.$listeners);
+    delete events.input;
+    return events;
   }
 
   /**
