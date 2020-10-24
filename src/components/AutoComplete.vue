@@ -1,7 +1,20 @@
 <template>
   <div :id="'autocomplete-' + _uid" class="autocomplete">
     <div class="autocomplete-input">
-      <TextField :leftIcon="icon" :required="required" />
+      <TextField
+        :type="type"
+        :value="value"
+        :variant="variant"
+        :label="label"
+        :name="name"
+        :shaped="shaped"
+        :leftIcon="leftIcon"
+        :rightIcon="rightIcon"
+        :helperText="helperText"
+        :required="required"
+        :disabled="disabled"
+        v-on="inputListeners()"
+      />
     </div>
     <ul class="autocomplete-result-list"></ul>
     <ul class="autocomplete-result-list autocomplete-no-result" visible="false">
@@ -23,9 +36,19 @@ import Autocomplete from "@trevoreyre/autocomplete-js";
   }
 })
 export default class AutoComplete extends Vue {
-  @Prop({ default: "search" }) private icon!: string;
+  @Prop({ default: "text" }) private type!: string;
+  @Prop({ default: null }) private value!: string;
+  @Prop({ default: "filled" }) private variant!: string;
+  @Prop({ default: "Label" }) private label!: string;
+  @Prop({ default: "" }) private name!: string;
+  @Prop({ default: false }) private shaped!: boolean;
+  @Prop({ default: "search" }) private leftIcon!: string;
+  @Prop({ default: "" }) private rightIcon!: string;
+  @Prop({ default: "" }) private helperText!: string;
+  @Prop({ default: null }) private required!: string;
+  @Prop({ default: false }) private disabled!: boolean;
   @Prop({ default: "No results found" }) private noResultLabel!: string;
-  @Prop({ default: false }) private required!: boolean;
+
   @Prop({ default: null }) private search!: () => string[];
   @Prop({ default: 3 }) private start!: number;
 
@@ -82,6 +105,13 @@ export default class AutoComplete extends Vue {
         this.inputElement.blur();
       }
     } as any);
+  }
+
+  /**
+   * emit the events of the TextField.
+   */
+  inputListeners() {
+    return this.$listeners;
   }
 
   /**
