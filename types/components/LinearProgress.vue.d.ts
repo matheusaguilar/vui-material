@@ -1,9 +1,10 @@
 import { Vue } from "vue-property-decorator";
+import { VComponent } from "@/ts/VComponent";
 export default class LinearProgress extends Vue {
     private id;
     private start;
     private isClosed;
-    private element;
+    element: VComponent;
     get isClosedClass(): " mdc-linear-progress--closed" | "";
     show(): void;
     hide(): void;

@@ -1,9 +1,10 @@
 import { Vue } from "vue-property-decorator";
+import { VComponent } from "@/ts/VComponent";
 export default class Checkbox extends Vue {
     private id;
     private value;
     private label;
-    private element;
+    element: VComponent;
     inputListeners(): Record<string, Function | Function[]> & {
         input: (event: any) => void;
     };

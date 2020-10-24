@@ -1,7 +1,7 @@
 <template>
   <div :id="'autocomplete-' + _uid" class="autocomplete">
     <div class="autocomplete-input">
-      <TextField :leftIcon="icon" />
+      <TextField :leftIcon="icon" :required="required" />
     </div>
     <ul class="autocomplete-result-list"></ul>
     <ul class="autocomplete-result-list autocomplete-no-result" visible="false">
@@ -25,6 +25,7 @@ import Autocomplete from "@trevoreyre/autocomplete-js";
 export default class AutoComplete extends Vue {
   @Prop({ default: "search" }) private icon!: string;
   @Prop({ default: "No results found" }) private noResultLabel!: string;
+  @Prop({ default: false }) private required!: boolean;
   @Prop({ default: null }) private search!: () => string[];
   @Prop({ default: 3 }) private start!: number;
 

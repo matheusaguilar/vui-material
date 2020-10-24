@@ -10,7 +10,7 @@ export default class Select extends Vue {
     private items;
     element: VComponent;
     get variantClass(): " mdc-select--outlined" | " mdc-select--filled";
-    get requiredClass(): " mdc-select--required" | "";
+    get requiredClass(): "" | " mdc-select--required";
     selectedClass(selected: any): "" | " mdc-list-item--selected";
     disabledClass(disabled: any): "" | " mdc-list-item--disabled";
     get itemsParsed(): any[];

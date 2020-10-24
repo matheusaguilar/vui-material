@@ -23,4 +23,5 @@ import DataTable from "../components/DataTable.vue";
 import Menu from "../components/Menu.vue";
 import Snackbar from "../components/Snackbar.vue";
 import LinearProgress from "../components/LinearProgress.vue";
-export { LayoutApp, TopAppBar, Drawer, LayoutGrid, LayoutGridCell, LayoutGridInner, IconButton, TextField, TextArea, Select, RadioButton, ChipGrid, Chip, Card, List, ListItem, Modal, Button, FabButton, Checkbox, DataTable, Switche, Menu, Snackbar, LinearProgress };
+import AutoComplete from "../components/AutoComplete.vue";
+export { LayoutApp, TopAppBar, Drawer, LayoutGrid, LayoutGridCell, LayoutGridInner, IconButton, TextField, TextArea, Select, RadioButton, ChipGrid, Chip, Card, List, ListItem, Modal, Button, FabButton, Checkbox, DataTable, Switche, Menu, Snackbar, LinearProgress, AutoComplete };

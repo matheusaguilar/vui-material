@@ -10,7 +10,6 @@ import IconButton from "../components/IconButton.vue";
 import TextField from "../components/TextField.vue";
 import TextArea from "../components/TextArea.vue";
 import Select from "../components/Select.vue";
-import AutoComplete from "../components/AutoComplete.vue";
 import Checkbox from "../components/Checkbox.vue";
 import Switche from "../components/Switche.vue";
 import RadioButton from "../components/RadioButton.vue";
@@ -24,6 +23,7 @@ import DataTable from "../components/DataTable.vue";
 import Menu from "../components/Menu.vue";
 import Snackbar from "../components/Snackbar.vue";
 import LinearProgress from "../components/LinearProgress.vue";
+import AutoComplete from "../components/AutoComplete.vue";
 
 export {
   LayoutApp,
@@ -36,7 +36,6 @@ export {
   TextField,
   TextArea,
   Select,
-  AutoComplete,
   RadioButton,
   ChipGrid,
   Chip,
@@ -51,5 +50,6 @@ export {
   Switche,
   Menu,
   Snackbar,
-  LinearProgress
+  LinearProgress,
+  AutoComplete
 };
