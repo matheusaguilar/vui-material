@@ -3,5 +3,5 @@ export declare class VComponent {
     dom: any;
     ripple: any;
     dataid: string;
-    mergeAttributes(defaultData: any, data: any): any;
+    mergeAttributes(defaultData: any, data: any, optMergeString?: string): any;
 }

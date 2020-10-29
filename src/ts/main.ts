@@ -16,6 +16,7 @@ import RadioButton from "../components/RadioButton.vue";
 import ChipGrid from "../components/ChipGrid.vue";
 import Chip from "../components/Chip.vue";
 import Card from "../components/Card.vue";
+import ImageList from "../components/ImageList.vue";
 import List from "../components/List.vue";
 import ListItem from "../components/ListItem.vue";
 import Modal from "../components/Modal.vue";
@@ -40,6 +41,7 @@ export {
   ChipGrid,
   Chip,
   Card,
+  ImageList,
   List,
   ListItem,
   Modal,

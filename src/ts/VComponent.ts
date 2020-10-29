@@ -4,12 +4,13 @@ export class VComponent {
   ripple: any = null;
   dataid = "data-wbid";
 
-  mergeAttributes(defaultData: any, data: any) {
+  mergeAttributes(defaultData: any, data: any, optMergeString?: string) {
     if (typeof data === "string") {
-      return {
-        ...defaultData,
-        name: data
+      const obj = {
+        ...defaultData
       };
+      obj[optMergeString ? optMergeString : "name"] = data;
+      return obj;
     }
     return {
       ...defaultData,

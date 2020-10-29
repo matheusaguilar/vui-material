@@ -29,6 +29,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import TextField from "@/components/TextField.vue";
 import Autocomplete from "@trevoreyre/autocomplete-js";
+import { VComponent } from "@/ts/VComponent";
 
 @Component({
   components: {
@@ -58,8 +59,12 @@ export default class AutoComplete extends Vue {
   private selected: any = null;
   private searchResults: any = [];
 
+  public element = new VComponent();
+
   mounted() {
-    this.autocompleteDiv = document.getElementById(`autocomplete-${this._uid}`);
+    this.element.dom = document.getElementById(`autocomplete-${this._uid}`);
+
+    this.autocompleteDiv = this.element.dom;
     this.autocompleteInputDiv = document.querySelector(".autocomplete-input");
     this.inputElement = this.autocompleteInputDiv.querySelector("input");
 

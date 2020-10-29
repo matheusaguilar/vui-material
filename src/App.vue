@@ -216,7 +216,10 @@
       <LayoutGridInner>
         <LayoutGridCell desktop="4" tablet="4" phone="4">
           <div class="component-info">Card</div>
-          <Card :img="`${publicPath}assets/porto-seguro-brazil.jpg`" />
+          <Card
+            :img="`${publicPath}assets/porto-seguro-brazil.jpg`"
+            :lazy="true"
+          />
         </LayoutGridCell>
 
         <LayoutGridCell desktop="4" tablet="4" phone="4">
@@ -224,6 +227,7 @@
           <Card
             :img="`${publicPath}assets/porto-seguro-brazil.jpg`"
             variant="basic-overmedia"
+            :lazy="true"
           />
         </LayoutGridCell>
 
@@ -232,6 +236,7 @@
           <Card
             :img="`${publicPath}assets/porto-seguro-brazil.jpg`"
             variant="basic-header"
+            :lazy="true"
           />
         </LayoutGridCell>
 
@@ -240,6 +245,7 @@
           <Card
             :img="`${publicPath}assets/porto-seguro-brazil.jpg`"
             action="true"
+            :lazy="true"
           >
             <Button />
           </Card>
@@ -250,6 +256,26 @@
           <Card
             :img="`${publicPath}assets/porto-seguro-brazil.jpg`"
             variant="image-text"
+            :lazy="true"
+          />
+        </LayoutGridCell>
+      </LayoutGridInner>
+    </LayoutGrid>
+
+    <!--ImageList-->
+    <LayoutGrid class="layout-grid">
+      <h3 class="layout-grid-title">Image List</h3>
+
+      <LayoutGridInner>
+        <LayoutGridCell desktop="12" tablet="8" phone="4">
+          <div class="component-info">Image List</div>
+          <ImageList
+            :imgs="imageListItems"
+            variant="standard"
+            :lazy="true"
+            :labelOverflow="true"
+            :column="4"
+            @click="logEvent"
           />
         </LayoutGridCell>
       </LayoutGridInner>
@@ -401,6 +427,7 @@ import RadioButton from "./components/RadioButton.vue";
 import ChipGrid from "./components/ChipGrid.vue";
 import Chip from "./components/Chip.vue";
 import Card from "./components/Card.vue";
+import ImageList from "./components/ImageList.vue";
 import List from "./components/List.vue";
 import ListItem from "./components/ListItem.vue";
 import Modal from "./components/Modal.vue";
@@ -427,6 +454,7 @@ import LinearProgress from "./components/LinearProgress.vue";
     ChipGrid,
     Chip,
     Card,
+    ImageList,
     List,
     ListItem,
     Modal,
@@ -466,6 +494,23 @@ export default class App extends Vue {
     "html",
     "css",
     "js"
+  ];
+
+  private imageListItems = [
+    {
+      src: `${process.env.BASE_URL}assets/angra-dos-reis-brazil.jpg`,
+      label: "Image with label"
+    },
+    `${process.env.BASE_URL}assets/angra-dos-reis-brazil.jpg`,
+    {
+      src: `${process.env.BASE_URL}assets/angra-dos-reis-brazil.jpg`,
+      label: "Image with label"
+    },
+    `${process.env.BASE_URL}assets/angra-dos-reis-brazil.jpg`,
+    `${process.env.BASE_URL}assets/angra-dos-reis-brazil.jpg`,
+    `${process.env.BASE_URL}assets/angra-dos-reis-brazil.jpg`,
+    `${process.env.BASE_URL}assets/angra-dos-reis-brazil.jpg`,
+    `${process.env.BASE_URL}assets/angra-dos-reis-brazil.jpg`
   ];
 
   publicPath = process.env.BASE_URL;

@@ -4,8 +4,15 @@
     <div class="mdc-card mdc-basic-card" v-if="variant == 'basic'">
       <div class="mdc-card__primary-action" @click="$emit('click')">
         <div
+          v-if="!lazy"
           class="mdc-card__media mdc-card__media--16-9"
           :style="{ backgroundImage: 'url(' + img + ')' }"
+        ></div>
+        <!--Lazy-->
+        <div
+          v-else
+          class="mdc-card__media mdc-card__media--16-9"
+          v-lazy:background-image="img"
         ></div>
         <div class="mdc-card__primary" v-if="title || subtitle">
           <h2
@@ -43,8 +50,34 @@
     >
       <div class="mdc-card__primary-action" @click="$emit('click')">
         <div
+          v-if="!lazy"
           class="mdc-card__media mdc-card__media--16-9"
           :style="{ backgroundImage: 'url(' + img + ')' }"
+        >
+          <div
+            class="mdc-card__media-content mdc-overmedia-card__media-content"
+          >
+            <div class="mdc-card__primary mdc-overmedia-card__primary">
+              <h2
+                class="mdc-card__title mdc-typography mdc-typography--headline6"
+                v-if="title"
+              >
+                {{ title }}
+              </h2>
+              <h3
+                class="mdc-card__subtitle mdc-typography mdc-typography--subtitle2"
+                v-if="subtitle"
+              >
+                {{ subtitle }}
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!--Lazy-->
+        <div
+          v-else
+          class="mdc-card__media mdc-card__media--16-9"
+          v-lazy:background-image="img"
         >
           <div
             class="mdc-card__media-content mdc-overmedia-card__media-content"
@@ -97,8 +130,15 @@
       </div>
       <div class="mdc-card__primary-action" @click="$emit('click')">
         <div
+          v-if="!lazy"
           class="mdc-card__media mdc-card__media--16-9"
           :style="{ backgroundImage: 'url(' + img + ')' }"
+        ></div>
+        <!--Lazy-->
+        <div
+          v-else
+          class="mdc-card__media mdc-card__media--16-9"
+          v-lazy:background-image="img"
         ></div>
         <div
           class="mdc-card__secondary mdc-header-card__secondary mdc-typography mdc-typography--body2"
@@ -118,8 +158,15 @@
     <div class="mdc-card mdc-image-text" v-if="variant == 'image-text'">
       <div class="mdc-card__primary-action" @click="$emit('click')">
         <div
+          v-if="!lazy"
           class="mdc-card__media mdc-card__media--square"
           :style="{ backgroundImage: 'url(' + img + ')' }"
+        ></div>
+        <!--Lazy-->
+        <div
+          v-else
+          class="mdc-card__media mdc-card__media--square"
+          v-lazy:background-image="img"
         ></div>
         <div class="mdc-card__primary">
           <h2
@@ -150,11 +197,17 @@ import { Vue } from "vue-property-decorator";
 import { VComponent } from "@/ts/VComponent";
 import { Component, Prop } from "vue-property-decorator";
 import { MDCRipple } from "@material/ripple";
+import VueLazyload from "vue-lazyload";
+
+Vue.use(VueLazyload, {
+  observer: true
+});
 
 @Component
 export default class Card extends Vue {
   @Prop() private id!: string;
   @Prop({ default: "basic" }) private variant!: string;
+  @Prop({ default: false }) private lazy!: boolean;
   @Prop({ default: null }) private img!: string;
   @Prop({ default: "Title" }) private title!: string;
   @Prop({ default: "SubTitle" }) private subtitle!: string;

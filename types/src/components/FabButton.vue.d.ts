@@ -1,5 +1,5 @@
 import { Vue } from "vue-property-decorator";
-import { VComponent } from "@/ts/VComponent";
+import { VComponent } from "../ts/VComponent";
 export default class FabButton extends Vue {
     private id;
     private type;
