@@ -1,11 +1,11 @@
 import { Vue } from "vue-property-decorator";
 import { VComponent } from "../ts/VComponent";
 export default class IconButton extends Vue {
-  private id;
-  private icon;
-  private iconOn;
-  element: VComponent;
-  private on;
-  changeOn(event: any): void;
-  mounted(): void;
+    private id;
+    private icon;
+    private iconOn;
+    element: VComponent;
+    private on;
+    changeOn(event: any): void;
+    mounted(): void;
 }
