@@ -259,6 +259,15 @@
             :lazy="true"
           />
         </LayoutGridCell>
+
+        <LayoutGridCell desktop="4" tablet="4" phone="4">
+          <div class="component-info">Card clean</div>
+          <Card
+            :img="`${publicPath}assets/porto-seguro-brazil.jpg`"
+            variant="clean"
+            :lazy="true"
+          />
+        </LayoutGridCell>
       </LayoutGridInner>
     </LayoutGrid>
 

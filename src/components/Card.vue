@@ -12,7 +12,7 @@
         <div
           v-else
           class="mdc-card__media mdc-card__media--16-9"
-          v-lazy:background-image="img"
+          v-lazy:background-image="imgObj"
         ></div>
         <div class="mdc-card__primary" v-if="title || subtitle">
           <h2
@@ -41,6 +41,21 @@
           <slot></slot>
         </div>
       </div>
+    </div>
+
+    <!--Clean-->
+    <div class="mdc-card-clean" v-if="variant == 'clean'">
+      <div
+        class="mdc-card-clean-img"
+        v-if="!lazy"
+        :style="{ backgroundImage: 'url(' + img + ')' }"
+      ></div>
+      <!--Lazy-->
+      <div
+        class="mdc-card-clean-img"
+        v-else
+        v-lazy:background-image="imgObj"
+      ></div>
     </div>
 
     <!--Text Over Media-->
@@ -77,7 +92,7 @@
         <div
           v-else
           class="mdc-card__media mdc-card__media--16-9"
-          v-lazy:background-image="img"
+          v-lazy:background-image="imgObj"
         >
           <div
             class="mdc-card__media-content mdc-overmedia-card__media-content"
@@ -138,7 +153,7 @@
         <div
           v-else
           class="mdc-card__media mdc-card__media--16-9"
-          v-lazy:background-image="img"
+          v-lazy:background-image="imgObj"
         ></div>
         <div
           class="mdc-card__secondary mdc-header-card__secondary mdc-typography mdc-typography--body2"
@@ -166,7 +181,7 @@
         <div
           v-else
           class="mdc-card__media mdc-card__media--square"
-          v-lazy:background-image="img"
+          v-lazy:background-image="imgObj"
         ></div>
         <div class="mdc-card__primary">
           <h2
@@ -209,12 +224,22 @@ export default class Card extends Vue {
   @Prop({ default: "basic" }) private variant!: string;
   @Prop({ default: false }) private lazy!: boolean;
   @Prop({ default: null }) private img!: string;
+  @Prop({ default: null }) private imgLoading!: string;
+  @Prop({ default: null }) private imgError!: string;
   @Prop({ default: "Title" }) private title!: string;
   @Prop({ default: "SubTitle" }) private subtitle!: string;
   @Prop({ default: "Description" }) private description!: string;
   @Prop({ default: false }) private action!: boolean;
 
   public element = new VComponent();
+
+  get imgObj() {
+    return {
+      loading: this.imgLoading,
+      src: this.img,
+      error: this.imgError
+    };
+  }
 
   mounted() {
     this.element.dom = document.querySelector(
@@ -239,7 +264,8 @@ export default class Card extends Vue {
 @include card.core-styles;
 
 .mdc-card-container {
-  max-width: 100%;
+  width: 100%;
+  height: 100%;
 
   .mdc-card__primary {
     padding: 1rem;
@@ -265,6 +291,20 @@ export default class Card extends Vue {
 }
 
 //basic
+
+//clean
+.mdc-card-clean {
+  width: 100%;
+  height: 100%;
+
+  .mdc-card-clean-img {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+}
 
 //basic-overmedia
 .mdc-basic-overmedia {

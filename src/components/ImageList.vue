@@ -75,7 +75,6 @@
         <!--Lazy-->
         <ul
           v-else
-          v-lazy-container="{ selector: 'img' }"
           :class="
             'mdc-image-list mdc-image-list--masonry vui-material-masonry-image-list' +
               isLabelOverflow
@@ -88,7 +87,14 @@
             :key="index"
             @click="emitClick(img, index)"
           >
-            <img class="mdc-image-list__image" :data-src="img.src" />
+            <img
+              class="mdc-image-list__image"
+              v-lazy="{
+                loading: img.imgLoading,
+                src: img.src,
+                error: img.imgError
+              }"
+            />
             <div class="mdc-image-list__supporting" v-if="img.label">
               <span class="mdc-image-list__label">{{ img.label }}</span>
             </div>
@@ -135,7 +141,11 @@
             <div class="mdc-image-list__image-aspect-container">
               <div
                 class="mdc-image-list__image"
-                v-lazy:background-image="img.src"
+                v-lazy:background-image="{
+                  loading: img.imgLoading,
+                  src: img.src,
+                  error: img.imgError
+                }"
               ></div>
             </div>
             <div class="mdc-image-list__supporting" v-if="img.label">
@@ -235,7 +245,9 @@ export default class ImageList extends Vue {
     return this.imgs?.map(img =>
       this.element.mergeAttributes(
         {
-          label: null
+          label: null,
+          imgLoading: null,
+          imgError: null
         },
         img,
         "src"
