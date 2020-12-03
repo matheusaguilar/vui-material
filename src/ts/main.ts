@@ -8,6 +8,7 @@ import Button from "../components/Button.vue";
 import FabButton from "../components/FabButton.vue";
 import IconButton from "../components/IconButton.vue";
 import TextField from "../components/TextField.vue";
+import TextFieldMask from "../components/TextFieldMask.vue";
 import TextArea from "../components/TextArea.vue";
 import Select from "../components/Select.vue";
 import Checkbox from "../components/Checkbox.vue";
@@ -35,6 +36,7 @@ export {
   LayoutGridInner,
   IconButton,
   TextField,
+  TextFieldMask,
   TextArea,
   Select,
   RadioButton,

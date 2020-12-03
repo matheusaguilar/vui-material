@@ -1,5 +1,5 @@
 <template>
-  <div :id="'autocomplete-' + _uid" class="autocomplete">
+  <div :id="'autocomplete-' + _uid" class="mdc-autocomplete">
     <div class="autocomplete-input">
       <TextField
         :type="type"
@@ -139,7 +139,7 @@ export default class AutoComplete extends Vue {
 <style lang="scss">
 @import "@material/theme/mdc-theme";
 
-.autocomplete {
+.mdc-autocomplete {
   max-width: 400px;
   margin: 0 auto;
 

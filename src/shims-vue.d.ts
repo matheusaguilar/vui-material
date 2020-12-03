@@ -11,3 +11,4 @@ declare module "*.vue" {
 }
 
 declare module "@trevoreyre/autocomplete-js";
+declare module "vanilla-masker";
