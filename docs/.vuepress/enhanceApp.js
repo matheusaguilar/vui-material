@@ -24,6 +24,12 @@ import TextArea from '../../src/components/TextArea';
 import TextField from '../../src/components/TextField';
 import TextFieldMask from '../../src/components/TextFieldMask';
 
+/**
+ * these components aren't calling the hooks
+ * to do a build, put the components to be globally inside the folder .vuepress/components
+ * use these ones just to development
+ */
+
 export default ({
   Vue, // the version of Vue being used in the VuePress app
   options, // the options for the root Vue instance

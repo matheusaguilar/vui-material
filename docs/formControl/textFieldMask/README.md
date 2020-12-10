@@ -72,5 +72,5 @@ function getUnmaskedValue() {
 | zeroCents | String | Define the zeroCents of the money value | false |
 
 ::: tip
-We use this library to do the mask: [Vanilla-Masker](https://github.com/vanilla-masker/vanilla-masker)! Thank you guys!
+We use this library to create this component: [Vanilla-Masker](https://github.com/vanilla-masker/vanilla-masker)! Thank you guys!
 :::

@@ -34,4 +34,6 @@ tags:
 | start | Number      |    Define when to start show the options  | 3 |
 | search | Function      |    A function that returns string[] items that can be selected based on the input | () => [] |
 
-
+::: tip
+We use this library to create this component: [Trevoreyre-Autocomplete](https://github.com/trevoreyre/autocomplete)! Thank you guys!
+:::

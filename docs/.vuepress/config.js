@@ -72,7 +72,6 @@ module.exports = {
   },
   base: isProd ? "/vui-material/" : "/",
   scss: {
-    prependData: `@use "../../src/scss/common.scss";`,
     webpackImporter: false,
     sassOptions: {
       includePaths: [path.resolve(projectRoot, "node_modules")],
