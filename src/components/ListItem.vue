@@ -3,7 +3,7 @@
     <li
       :class="'mdc-list-item' + twoLineClass + activeClass"
       :id="id"
-      :tabindex="tabindex"
+      :tabindex="tabIndex"
       v-on="inputListeners()"
     >
       <span class="mdc-list-item__ripple"></span>
@@ -37,7 +37,7 @@ export default class ListItem extends Vue {
   @Prop({ default: "" }) private description!: string;
   @Prop({ default: "" }) private leftIcon!: string;
   @Prop({ default: false }) private divider!: boolean;
-  @Prop({ default: "" }) private tabindex!: string;
+  @Prop({ default: "" }) private tabIndex!: string;
   @Prop({ default: false }) private active!: boolean;
 
   public element = new VComponent();

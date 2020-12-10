@@ -26,7 +26,7 @@ import { Component, Prop } from "vue-property-decorator";
 import { MDCSwitch } from "@material/switch";
 
 @Component
-export default class IconButton extends Vue {
+export default class Switche extends Vue {
   @Prop() private id!: string;
   @Prop({ default: null }) private value!: string;
   @Prop({ default: "Label" }) private label!: string;

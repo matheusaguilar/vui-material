@@ -22,6 +22,7 @@
         rows="6"
         cols="40"
         aria-label="Label"
+        :name="name"
         :placeholder="label"
         :maxlength="maxlength"
         :required="required ? true : false"
@@ -54,6 +55,7 @@ export default class TextArea extends Vue {
   @Prop() private id!: string;
   @Prop({ default: null }) private value!: string;
   @Prop({ default: "filled" }) private variant!: string;
+  @Prop({ default: "" }) private name!: string;
   @Prop({ default: null }) private label!: string;
   @Prop({ default: null }) private required!: string;
   @Prop({ default: false }) private disabled!: boolean;

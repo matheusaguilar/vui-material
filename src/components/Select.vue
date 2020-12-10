@@ -103,7 +103,7 @@ export default class Select extends Vue {
   @Prop({ default: "Label" }) private label!: string;
   @Prop({ default: false }) private shaped!: boolean;
   @Prop({ default: false }) private required!: boolean;
-  @Prop({ default: [] }) private items!: any[];
+  @Prop({ default: () => [] }) private items!: any[];
 
   public element = new VComponent();
 

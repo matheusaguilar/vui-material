@@ -173,11 +173,11 @@ export default class ImageList extends Vue {
   @Prop() private id!: string;
   @Prop({ default: "standard" }) private variant!: string;
   @Prop({ default: false }) private lazy!: boolean;
-  @Prop({ default: 4 }) private column!: string;
+  @Prop({ default: 4 }) private column!: number;
   @Prop({ default: 300 }) private mobileWidth!: string;
   @Prop({ default: 200 }) private mobileHeight!: string;
-  @Prop({ default: true }) private labelOverflow!: boolean;
-  @Prop({ default: true }) private action!: boolean;
+  @Prop({ default: false }) private labelOverflow!: boolean;
+  @Prop({ default: false }) private action!: boolean;
   @Prop({ default: () => [] }) private imgs!: string[];
 
   public element = new VComponent();

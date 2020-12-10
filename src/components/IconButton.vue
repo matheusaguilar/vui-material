@@ -23,8 +23,8 @@ import { MDCIconButtonToggle } from "@material/icon-button";
 @Component
 export default class IconButton extends Vue {
   @Prop() private id!: string;
-  @Prop({ default: "" }) private icon!: string;
-  @Prop({ default: "" }) private iconOn!: string;
+  @Prop({ default: null }) private icon!: string;
+  @Prop({ default: null }) private iconOn!: string;
 
   public element = new VComponent();
   private on = false;

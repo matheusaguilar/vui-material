@@ -51,6 +51,10 @@ export default class Chip extends Vue {
 
 <style lang="scss">
 .mdc-chip-shaped {
-  border-radius: 4px;
+  border-radius: 4px !important;
+
+  .mdc-chip__ripple {
+    border-radius: 4px !important;
+  }
 }
 </style>
