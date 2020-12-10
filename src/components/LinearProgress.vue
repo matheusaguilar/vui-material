@@ -6,6 +6,7 @@
     aria-valuemin="0"
     aria-valuemax="1"
     aria-valuenow="0"
+    :id="id"
     :[element.dataid]="'linearprogress' + _uid"
   >
     <div class="mdc-linear-progress__buffer">

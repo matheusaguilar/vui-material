@@ -12,6 +12,8 @@
       :helperText="helperText"
       :required="required"
       :disabled="disabled"
+      :pattern="pattern"
+      :title="title"
       :ref="'textfieldmask' + _uid"
     />
   </div>
@@ -42,17 +44,18 @@ export default class TextFieldMask extends Vue {
   @Prop({ default: "" }) private helperText!: string;
   @Prop({ default: null }) private required!: string;
   @Prop({ default: false }) private disabled!: boolean;
+  @Prop({ default: null }) private pattern!: string;
+  @Prop({ default: null }) private title!: string;
   @Prop({ default: "" }) private mask!: string | string[];
   @Prop({ default: false }) private money!: boolean;
   @Prop({ default: null }) private moneyOptions!: any;
   @Prop({ default: "$" }) private moneyUnit!: string;
-  @Prop({ default: false }) private blurClean!: boolean;
 
   public element = new VComponent();
   public unmasked = "";
   private textField!: TextField;
   private input: any;
-  private activeMask: string | null = null;
+  private activeMask: string | null = "";
 
   mounted() {
     this.element.dom = document.querySelector(
@@ -114,10 +117,10 @@ export default class TextFieldMask extends Vue {
    * mask the input value.
    */
   private maskInput() {
-    if (this.mask) {
-      if (this.money) {
-        this.maskMoney();
-      } else if (Array.isArray(this.mask)) {
+    if (this.money) {
+      this.maskMoney();
+    } else if (this.mask) {
+      if (Array.isArray(this.mask)) {
         this.maskDynamic();
       } else {
         this.maskSimple();

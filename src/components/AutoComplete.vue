@@ -1,5 +1,9 @@
 <template>
-  <div :id="'autocomplete-' + _uid" class="mdc-autocomplete">
+  <div
+    :id="id"
+    :[element.dataid]="'autocomplete-' + _uid"
+    class="mdc-autocomplete"
+  >
     <div class="autocomplete-input">
       <TextField
         :type="type"
@@ -13,6 +17,8 @@
         :helperText="helperText"
         :required="required"
         :disabled="disabled"
+        :pattern="pattern"
+        :title="title"
         v-on="inputListeners()"
       />
     </div>
@@ -37,6 +43,7 @@ import { VComponent } from "@/ts/VComponent";
   }
 })
 export default class AutoComplete extends Vue {
+  @Prop() private id!: string;
   @Prop({ default: "text" }) private type!: string;
   @Prop({ default: null }) private value!: string;
   @Prop({ default: "filled" }) private variant!: string;
@@ -48,9 +55,11 @@ export default class AutoComplete extends Vue {
   @Prop({ default: "" }) private helperText!: string;
   @Prop({ default: null }) private required!: string;
   @Prop({ default: false }) private disabled!: boolean;
+  @Prop({ default: null }) private pattern!: string;
+  @Prop({ default: null }) private title!: string;
   @Prop({ default: "No results found" }) private noResultLabel!: string;
 
-  @Prop({ default: null }) private search!: () => string[];
+  @Prop({ default: () => () => [] }) private search!: () => string[];
   @Prop({ default: 3 }) private start!: number;
 
   private autocompleteDiv: any = null;
@@ -62,7 +71,9 @@ export default class AutoComplete extends Vue {
   public element = new VComponent();
 
   mounted() {
-    this.element.dom = document.getElementById(`autocomplete-${this._uid}`);
+    this.element.dom = document.querySelector(
+      `div[${this.element.dataid}=autocomplete-${this._uid}]`
+    );
 
     this.autocompleteDiv = this.element.dom;
     this.autocompleteInputDiv = document.querySelector(".autocomplete-input");
@@ -106,9 +117,11 @@ export default class AutoComplete extends Vue {
         </li>
       `,
       onSubmit: (result: any) => {
-        this.selected = result;
-        this.inputElement.blur();
-        this.$emit("input", this.selected);
+        if (result) {
+          this.selected = result;
+          this.inputElement.blur();
+          this.$emit("input", this.selected);
+        }
       }
     } as any);
   }
@@ -179,13 +192,13 @@ export default class AutoComplete extends Vue {
     width: 100%;
     top: 100%;
   }
+}
 
-  .no-results .autocomplete-no-result {
-    display: block;
-  }
+.no-results .autocomplete-no-result {
+  display: block;
+}
 
-  .no-results .autocomplete-input:not(.focused) ~ .autocomplete-no-result {
-    display: none;
-  }
+.no-results .autocomplete-input:not(.focused) ~ .autocomplete-no-result {
+  display: none;
 }
 </style>

@@ -1,5 +1,1 @@
-<h1>Hello VuePress</h1>
-
-<HelloWorld />
-
-<Button text="ola"/>
+<h1>Vui-Material</h1>
