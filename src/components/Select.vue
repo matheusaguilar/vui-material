@@ -6,7 +6,7 @@
       :required="required"
       tabindex="-1"
     />
-    <div :class="'mdc-select' + variantClass + requiredClass">
+    <div :class="'mdc-select' + variantClass + requiredClass + disabledClass">
       <div
         class="mdc-select__anchor"
         role="button"
@@ -69,8 +69,8 @@
           <li
             :class="
               'mdc-list-item' +
-                selectedClass(item.selected) +
-                disabledClass(item.disabled)
+                selectedClassItem(item.selected) +
+                disabledClassItem(item.disabled)
             "
             :aria-selected="item.selected"
             :data-value="item.name"
@@ -103,6 +103,7 @@ export default class Select extends Vue {
   @Prop({ default: "Label" }) private label!: string;
   @Prop({ default: false }) private shaped!: boolean;
   @Prop({ default: false }) private required!: boolean;
+  @Prop({ default: false }) private disabled!: boolean;
   @Prop({ default: () => [] }) private items!: any[];
 
   public element = new VComponent();
@@ -113,15 +114,19 @@ export default class Select extends Vue {
       : " mdc-select--filled";
   }
 
+  get disabledClass() {
+    return this.disabled ? " mdc-select--disabled" : "";
+  }
+
   get requiredClass() {
     return this.required ? " mdc-select--required" : "";
   }
 
-  selectedClass(selected: any) {
+  selectedClassItem(selected: any) {
     return selected ? " mdc-list-item--selected" : "";
   }
 
-  disabledClass(disabled: any) {
+  disabledClassItem(disabled: any) {
     return disabled ? " mdc-list-item--disabled" : "";
   }
 

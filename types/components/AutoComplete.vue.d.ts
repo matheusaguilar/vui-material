@@ -33,4 +33,12 @@ export default class AutoComplete extends Vue {
      * return a string based replace with b elements on selected items.
      */
     private replaceSelectedItem;
+    /**
+     * check if a value is string.
+     */
+    private isString;
+    /**
+     * uppercase all first letters from a pharase.
+     */
+    private upperCaseFirsts;
 }

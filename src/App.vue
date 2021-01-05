@@ -196,7 +196,7 @@
 
         <LayoutGridCell desktop="3" tablet="4" phone="4">
           <div class="component-info-title">auto complete</div>
-          <AutoComplete :search="() => autocompletItems" :start="1" />
+          <AutoComplete :search="testAuto" :start="1" />
         </LayoutGridCell>
 
         <LayoutGridCell desktop="3" tablet="4" phone="4">
@@ -560,6 +560,12 @@ export default class App extends Vue {
   ];
 
   publicPath = process.env.BASE_URL;
+
+  testAuto(input: any) {
+    console.log(input);
+
+    return this.autocompletItems;
+  }
 
   logVal(val: string) {
     console.log(val);

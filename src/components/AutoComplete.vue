@@ -17,6 +17,7 @@
         :helperText="helperText"
         :required="required"
         :disabled="disabled"
+        :maxlength="maxlength"
         :pattern="pattern"
         :title="title"
         v-on="inputListeners()"
@@ -55,17 +56,21 @@ export default class AutoComplete extends Vue {
   @Prop({ default: "" }) private helperText!: string;
   @Prop({ default: null }) private required!: string;
   @Prop({ default: false }) private disabled!: boolean;
+  @Prop({ default: null }) private maxlength!: string;
   @Prop({ default: null }) private pattern!: string;
   @Prop({ default: null }) private title!: string;
   @Prop({ default: "No results found" }) private noResultLabel!: string;
 
-  @Prop({ default: () => () => [] }) private search!: () => string[];
+  @Prop({ default: () => () => [] }) private search!: (
+    inputValue: string
+  ) => string[];
   @Prop({ default: 3 }) private start!: number;
 
   private autocompleteDiv: any = null;
   private autocompleteInputDiv: any = null;
   private inputElement: any = null;
   private selected: any = null;
+  private selectedValue: any = null;
   private searchResults: any = [];
 
   public element = new VComponent();
@@ -81,26 +86,41 @@ export default class AutoComplete extends Vue {
 
     this.inputElement.addEventListener("keyup", () => {
       this.selected = null;
+      this.selectedValue = "";
+      this.$emit("selected", this.selected);
     });
     this.inputElement.addEventListener("focus", () => {
       this.autocompleteInputDiv.classList.add("focused");
     });
     this.inputElement.addEventListener("blur", () => {
       this.autocompleteInputDiv.classList.remove("focused");
-      this.inputElement.value = this.selected;
+      this.inputElement.value = this.selectedValue;
     });
 
     new (Autocomplete as any)(this.autocompleteDiv, {
       autoSelect: true,
-      search: (input: any) => {
+      search: async (input: any) => {
         if (!this.search || input.length < this.start) {
           return [];
         }
 
-        this.searchResults = this.search();
-        return this.searchResults.filter((item: string) =>
-          item.toLowerCase().includes(input.toLowerCase())
-        );
+        this.searchResults = await this.search(input);
+
+        if (this.searchResults?.length > 0) {
+          if (!this.isString(this.searchResults[0])) {
+            return this.searchResults
+              .filter((item: any) =>
+                item.name?.toLowerCase()?.includes(input.toLowerCase())
+              )
+              .map((item: any) => item.name);
+          }
+
+          return this.searchResults.filter((item: any) =>
+            item?.toLowerCase()?.includes(input.toLowerCase())
+          );
+        }
+
+        return [];
       },
       onUpdate: (results: any) => {
         if (this.inputElement.value && results.length === 0) {
@@ -118,9 +138,17 @@ export default class AutoComplete extends Vue {
       `,
       onSubmit: (result: any) => {
         if (result) {
-          this.selected = result;
+          if (!this.isString(this.searchResults?.[0])) {
+            this.selected = this.searchResults.filter(
+              (item: any) => item.name === result
+            )[0];
+          } else {
+            this.selected = result;
+          }
+          this.selectedValue = result;
           this.inputElement.blur();
-          this.$emit("input", this.selected);
+          this.$emit("input", this.selectedValue);
+          this.$emit("selected", this.selected);
         }
       }
     } as any);
@@ -139,12 +167,41 @@ export default class AutoComplete extends Vue {
    * return a string based replace with b elements on selected items.
    */
   private replaceSelectedItem(result: string, searchValue: string) {
-    return result
+    if (result && searchValue) {
+      const rg = new RegExp(searchValue, "ig");
+      const rgUpper = new RegExp(searchValue, "i");
+      const upperCaseResult = this.upperCaseFirsts(result);
+      let upperCaseReplaceResult = upperCaseResult;
+      let matchArray = null;
+      while ((matchArray = rg.exec(upperCaseResult)) !== null) {
+        upperCaseReplaceResult = upperCaseReplaceResult.replace(
+          rgUpper,
+          `<b>${matchArray[0]}</b>`
+        );
+      }
+
+      return upperCaseReplaceResult;
+    }
+
+    return "";
+  }
+
+  /**
+   * check if a value is string.
+   */
+  private isString(value: any) {
+    return typeof value === "string";
+  }
+
+  /**
+   * uppercase all first letters from a pharase.
+   */
+  private upperCaseFirsts(value: string) {
+    return value
       .toLowerCase()
-      .replaceAll(
-        searchValue.toLowerCase(),
-        `<b>${searchValue.toLowerCase()}</b>`
-      );
+      .split(" ")
+      .map(val => val.charAt(0).toUpperCase() + val.substring(1))
+      .join(" ");
   }
 }
 </script>
@@ -153,9 +210,6 @@ export default class AutoComplete extends Vue {
 @import "@material/theme/mdc-theme";
 
 .mdc-autocomplete {
-  max-width: 400px;
-  margin: 0 auto;
-
   .autocomplete-result-list {
     margin: 0;
     border: 1px solid rgba(0, 0, 0, 0.12);

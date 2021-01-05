@@ -1,5 +1,5 @@
 <template>
-  <div :id="'inputmask-' + _uid">
+  <div :id="id" :[element.dataid]="'inputmask-' + _uid">
     <TextField
       :type="type"
       :value="value"
@@ -12,9 +12,11 @@
       :helperText="helperText"
       :required="required"
       :disabled="disabled"
+      :maxlength="maxlength"
       :pattern="pattern"
       :title="title"
       :ref="'textfieldmask' + _uid"
+      v-on="inputListeners()"
     />
   </div>
 </template>
@@ -46,28 +48,27 @@ export default class TextFieldMask extends Vue {
   @Prop({ default: false }) private disabled!: boolean;
   @Prop({ default: null }) private pattern!: string;
   @Prop({ default: null }) private title!: string;
+  @Prop({ default: null }) private maxlength!: string;
   @Prop({ default: "" }) private mask!: string | string[];
   @Prop({ default: false }) private money!: boolean;
   @Prop({ default: null }) private moneyOptions!: any;
   @Prop({ default: "$" }) private moneyUnit!: string;
 
   public element = new VComponent();
-  public unmasked = "";
   private textField!: TextField;
   private input: any;
   private activeMask: string | null = "";
 
   mounted() {
     this.element.dom = document.querySelector(
-      `div[${this.element.dataid}=inputmask${this._uid}]`
+      `div[${this.element.dataid}=inputmask-${this._uid}]`
     );
 
     this.textField = this.$refs[`textfieldmask${this._uid}`] as TextField;
     this.input = this.textField.element.dom.querySelector("input");
-    this.unmasked = this.value;
+    this.$emit("unmask", this.input.value);
 
     this.input.addEventListener("change", () => {
-      this.$emit("input", this.input.value);
       this.$emit("change", this.input.value);
     });
 
@@ -79,12 +80,22 @@ export default class TextFieldMask extends Vue {
   }
 
   /**
+   * emit the events of the TextField.
+   */
+  inputListeners() {
+    const events = Object.assign({}, this.$listeners);
+    delete events.input;
+    delete events.change;
+    return events;
+  }
+
+  /**
    * added to update the input value based on changes made in value prop.
    */
   @Watch("value")
   private updateInputValue() {
     VMasker(this.input).unMask();
-    this.unmasked = this.input.value;
+    this.$emit("unmask", this.input.value);
     window.setTimeout(() => {
       this.updateMaskValue();
     });
@@ -133,6 +144,9 @@ export default class TextFieldMask extends Vue {
    */
   private maskMoney() {
     this.activeMask = null;
+    this.input.addEventListener("input", () => {
+      this.$emit("input", this.input.value);
+    });
     if (this.moneyOptions) {
       VMasker(this.input).maskMoney(this.moneyOptions);
     } else {
@@ -159,6 +173,9 @@ export default class TextFieldMask extends Vue {
    */
   private maskSimple() {
     this.activeMask = this.mask as string;
+    this.input.addEventListener("input", () => {
+      this.$emit("input", this.input.value);
+    });
     VMasker(this.input).maskPattern(this.mask);
   }
 
@@ -195,6 +212,7 @@ export default class TextFieldMask extends Vue {
     VMasker(c).unMask();
     VMasker(c).maskPattern(maskSelected);
     c.value = VMasker.toPattern(v, maskSelected);
+    this.$emit("input", this.input.value);
   }
 
   /**

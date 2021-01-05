@@ -118,7 +118,10 @@
     </div>
 
     <!--HelperLine-->
-    <div class="mdc-text-field-helper-line" v-if="helperId || maxlength">
+    <div
+      class="mdc-text-field-helper-line"
+      v-if="helperId || (maxlength && counter)"
+    >
       <p
         class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent mdc-text-field-helper-text--validation-msg"
         :id="helperId"
