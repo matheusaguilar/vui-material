@@ -51,8 +51,8 @@ export default class AutoComplete extends Vue {
   @Prop({ default: "Label" }) private label!: string;
   @Prop({ default: "" }) private name!: string;
   @Prop({ default: false }) private shaped!: boolean;
-  @Prop({ default: "search" }) private leftIcon!: string;
-  @Prop({ default: "" }) private rightIcon!: string;
+  @Prop({ default: "" }) private leftIcon!: string;
+  @Prop({ default: "search" }) private rightIcon!: string;
   @Prop({ default: "" }) private helperText!: string;
   @Prop({ default: null }) private required!: string;
   @Prop({ default: false }) private disabled!: boolean;
