@@ -15,9 +15,11 @@
       "
       v-if="variant == 'filled'"
     >
-      <i class="material-icons mdc-text-field__icon" v-if="leftIcon">{{
-        leftIcon
-      }}</i>
+      <i
+        class="material-icons mdc-text-field__icon"
+        v-if="leftIcon && !rightIcon"
+        >{{ leftIcon }}</i
+      >
       <input
         :type="type"
         :id="'textfield-' + _uid"
@@ -74,9 +76,11 @@
         v-bind:value="value"
         v-on="inputListeners()"
       />
-      <i class="material-icons mdc-text-field__icon" v-if="rightIcon">{{
-        rightIcon
-      }}</i>
+      <i
+        class="material-icons mdc-text-field__icon"
+        v-if="rightIcon && !leftIcon"
+        >{{ rightIcon }}</i
+      >
       <div class="mdc-notched-outline">
         <div class="mdc-notched-outline__leading"></div>
         <div class="mdc-notched-outline__notch" v-if="label">
