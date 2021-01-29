@@ -200,6 +200,11 @@
         </LayoutGridCell>
 
         <LayoutGridCell desktop="3" tablet="4" phone="4">
+          <div class="component-info-title">auto complete</div>
+          <AutoComplete :search="() => ['one', 'two']" :start="1" />
+        </LayoutGridCell>
+
+        <LayoutGridCell desktop="3" tablet="4" phone="4">
           <div class="component-info-title">checkbox</div>
           <Checkbox />
         </LayoutGridCell>

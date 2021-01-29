@@ -15,16 +15,20 @@ export default class TextFieldMask extends Vue {
     private disabled;
     private pattern;
     private title;
+    private maxlength;
     private mask;
     private money;
     private moneyOptions;
     private moneyUnit;
     element: VComponent;
-    unmasked: string;
     private textField;
     private input;
     private activeMask;
     mounted(): void;
+    /**
+     * emit the events of the TextField.
+     */
+    inputListeners(): Record<string, Function | Function[]>;
     /**
      * added to update the input value based on changes made in value prop.
      */

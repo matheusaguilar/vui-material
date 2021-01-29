@@ -13,6 +13,7 @@ export default class AutoComplete extends Vue {
     private helperText;
     private required;
     private disabled;
+    private maxlength;
     private pattern;
     private title;
     private noResultLabel;
@@ -22,6 +23,7 @@ export default class AutoComplete extends Vue {
     private autocompleteInputDiv;
     private inputElement;
     private selected;
+    private selectedValue;
     private searchResults;
     element: VComponent;
     mounted(): void;

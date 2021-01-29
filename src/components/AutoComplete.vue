@@ -80,11 +80,18 @@ export default class AutoComplete extends Vue {
       `div[${this.element.dataid}=autocomplete-${this._uid}]`
     );
 
+    console.log(this.element.dom);
+
     this.autocompleteDiv = this.element.dom;
-    this.autocompleteInputDiv = document.querySelector(".autocomplete-input");
+    this.autocompleteInputDiv = this.autocompleteDiv.querySelector(
+      ".autocomplete-input"
+    );
     this.inputElement = this.autocompleteInputDiv.querySelector("input");
 
+    console.log(this.autocompleteInputDiv);
+
     this.inputElement.addEventListener("keyup", () => {
+      console.log("sakdkasd");
       this.selected = null;
       this.selectedValue = "";
       this.$emit("selected", this.selected);
