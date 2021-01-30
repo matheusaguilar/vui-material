@@ -80,21 +80,36 @@ export default class AutoComplete extends Vue {
       `div[${this.element.dataid}=autocomplete-${this._uid}]`
     );
 
-    console.log(this.element.dom);
-
     this.autocompleteDiv = this.element.dom;
     this.autocompleteInputDiv = this.autocompleteDiv.querySelector(
       ".autocomplete-input"
     );
     this.inputElement = this.autocompleteInputDiv.querySelector("input");
 
-    console.log(this.autocompleteInputDiv);
-
-    this.inputElement.addEventListener("keyup", () => {
-      console.log("sakdkasd");
+    this.inputElement.addEventListener("keyup", (e: any) => {
       this.selected = null;
       this.selectedValue = "";
-      this.$emit("selected", this.selected);
+
+      // select item with TAB key
+      if (e.keyCode === 9 && this.searchResults?.length > 0) {
+        if (!this.isString(this.searchResults[0])) {
+          this.selected = this.searchResults.find(
+            (item: { name: string }) => item.name === this.inputElement.value
+          );
+          this.selectedValue = this.selected.name;
+        } else {
+          this.selected = this.searchResults.find(
+            (item: string) => item === this.inputElement.value
+          );
+          this.selectedValue = this.selected;
+        }
+
+        this.inputElement.blur();
+        this.$emit("input", this.selectedValue);
+        this.$emit("selected", this.selected);
+      } else {
+        this.$emit("selected", this.selected);
+      }
     });
     this.inputElement.addEventListener("focus", () => {
       this.autocompleteInputDiv.classList.add("focused");
@@ -102,6 +117,12 @@ export default class AutoComplete extends Vue {
     this.inputElement.addEventListener("blur", () => {
       this.autocompleteInputDiv.classList.remove("focused");
       this.inputElement.value = this.selectedValue;
+      this.searchResults = [];
+    });
+    this.inputElement.addEventListener("keydown", (e: any) => {
+      if (e.keyCode === 9 && this.searchResults?.length > 0) {
+        e.preventDefault();
+      }
     });
 
     new (Autocomplete as any)(this.autocompleteDiv, {
