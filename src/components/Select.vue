@@ -150,6 +150,15 @@ export default class Select extends Vue {
     }
   }
 
+  @Watch("disabled")
+  onChildChanged(value: any) {
+    if (this.element?.mdc) {
+      this.element.mdc.foundation.setDisabled(value);
+      // console.log();
+      // this.element.mdc.foundation.disalbed = value;
+    }
+  }
+
   mounted() {
     this.element.dom = document.querySelector(
       `div[${this.element.dataid}=select${this._uid}]`
