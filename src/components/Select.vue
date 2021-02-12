@@ -154,8 +154,6 @@ export default class Select extends Vue {
   onChildChanged(value: any) {
     if (this.element?.mdc) {
       this.element.mdc.foundation.setDisabled(value);
-      // console.log();
-      // this.element.mdc.foundation.disalbed = value;
     }
   }
 

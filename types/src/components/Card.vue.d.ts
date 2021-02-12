@@ -11,6 +11,8 @@ export default class Card extends Vue {
     private subtitle;
     private description;
     private action;
+    private href;
+    private hrefTarget;
     element: VComponent;
     get imgObj(): {
         loading: string;
