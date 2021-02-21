@@ -5,7 +5,7 @@
       id="layoutapp-drawer-modal"
       ref="drawerModal"
       variant="modal"
-      v-if="drawer || drawerItems"
+      v-if="drawer && drawerItems"
       :items="drawerItems"
     >
       <template v-slot:header>

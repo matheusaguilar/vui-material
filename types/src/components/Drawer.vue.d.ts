@@ -9,7 +9,7 @@ export default class Drawer extends Vue {
     private variantClassesMap;
     get hasHeaderSlot(): boolean;
     get variantClass(): any;
-    activeClass(active: boolean): "" | " mdc-list-item--activated";
+    activeClass(active: boolean): " mdc-list-item--activated" | "";
     isFunction(obj: any): boolean;
     callAction(event: any, action: any): void;
     change(): void;
