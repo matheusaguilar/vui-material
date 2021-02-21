@@ -23,7 +23,7 @@
       <Drawer
         id="layoutapp-drawer"
         ref="drawerSide"
-        v-if="drawer || drawerItems"
+        v-if="drawer && drawerItems"
         :items="drawerItems"
       >
         <template v-slot:header>
@@ -42,7 +42,7 @@
           :variant="topAppMode"
           :title="title"
           :titleHref="titleHref"
-          :menu="drawer || drawerItems"
+          :menu="drawer && drawerItems"
           @menu="clickMenu"
         >
           <slot name="topappbar"></slot>
