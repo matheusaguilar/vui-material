@@ -6,6 +6,7 @@
   >
     <div class="autocomplete-input">
       <TextField
+        :ref="'autocomplete-textfield' + _uid"
         :type="type"
         :value="value"
         :variant="variant"
@@ -33,9 +34,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 import TextField from "@/components/TextField.vue";
-import Autocomplete from "@trevoreyre/autocomplete-js";
+// import Autocomplete from "@trevoreyre/autocomplete-js";
+import Autocomplete from "@/vendor/autocomplete/autocomplete-js/index";
 import { VComponent } from "@/ts/VComponent";
 
 @Component({
@@ -63,92 +65,90 @@ export default class AutoComplete extends Vue {
 
   @Prop({ default: () => () => [] }) private search!: (
     inputValue: string
-  ) => string[];
+  ) => Promise<string[]>;
   @Prop({ default: 3 }) private start!: number;
 
   private autocompleteDiv: any = null;
   private autocompleteInputDiv: any = null;
   private inputElement: any = null;
   private selected: any = null;
-  private selectedValue: any = null;
+  private selectedValue: any = "";
   private searchResults: any = [];
 
   public element = new VComponent();
+  private textFieldMdcComponent: any = null;
+
+  @Watch("value")
+  onValueChanged(value: string) {
+    this.selectedValue = value;
+    if (this.selectedValue && !this.selected) {
+      Promise.resolve(this.search(this.selectedValue)).then((result: any[]) => {
+        this.searchResults = result;
+
+        if (!this.isString(this.searchResults[0])) {
+          this.selected = this.searchResults.find(
+            (item: any) =>
+              item.name?.toLowerCase() === this.selectedValue.toLowerCase()
+          );
+        } else {
+          this.selected = this.searchResults.find(
+            (item: any) =>
+              item?.toLowerCase() === this.selectedValue.toLowerCase()
+          );
+        }
+
+        this.$emit("selected", this.selected);
+      });
+    }
+  }
 
   mounted() {
+    // init elements
     this.element.dom = document.querySelector(
       `div[${this.element.dataid}=autocomplete-${this._uid}]`
     );
-
     this.autocompleteDiv = this.element.dom;
     this.autocompleteInputDiv = this.autocompleteDiv.querySelector(
       ".autocomplete-input"
     );
     this.inputElement = this.autocompleteInputDiv.querySelector("input");
+    this.element.mdc = (this.$refs[
+      `autocomplete-textfield${this._uid}`
+    ] as any).element.mdc;
+    this.textFieldMdcComponent = this.element.mdc.textField;
 
-    this.inputElement.addEventListener("keyup", (e: any) => {
-      this.selected = null;
-      this.selectedValue = "";
-
-      // select item with TAB key
-      if (e.keyCode === 9 && this.searchResults?.length > 0) {
-        if (!this.isString(this.searchResults[0])) {
-          this.selected = this.searchResults.find(
-            (item: { name: string }) => item.name === this.inputElement.value
-          );
-          this.selectedValue = this.selected.name;
-        } else {
-          this.selected = this.searchResults.find(
-            (item: string) => item === this.inputElement.value
-          );
-          this.selectedValue = this.selected;
-        }
-
-        this.inputElement.blur();
-        this.$emit("input", this.selectedValue);
-        this.$emit("selected", this.selected);
-      } else {
-        this.$emit("selected", this.selected);
-      }
-    });
+    // add focus class to the input
     this.inputElement.addEventListener("focus", () => {
       this.autocompleteInputDiv.classList.add("focused");
     });
+
+    // in blur, update element values
     this.inputElement.addEventListener("blur", () => {
       this.autocompleteInputDiv.classList.remove("focused");
-      this.inputElement.value = this.selectedValue;
-      this.searchResults = [];
+
+      this.textFieldMdcComponent.value = this.selectedValue;
+      this.$emit("input", this.selectedValue);
+      this.$emit("selected", this.selected);
     });
-    this.inputElement.addEventListener("keydown", (e: any) => {
-      if (e.keyCode === 9 && this.searchResults?.length > 0) {
-        e.preventDefault();
-      }
+
+    // clear values when user change values
+    this.inputElement.addEventListener("keydown", () => {
+      this.selected = null;
+      this.selectedValue = "";
     });
 
     new (Autocomplete as any)(this.autocompleteDiv, {
       autoSelect: true,
       search: async (input: any) => {
-        if (!this.search || input.length < this.start) {
+        if (input.length < this.start) {
           return [];
         }
 
         this.searchResults = await this.search(input);
 
-        if (this.searchResults?.length > 0) {
-          if (!this.isString(this.searchResults[0])) {
-            return this.searchResults
-              .filter((item: any) =>
-                item.name?.toLowerCase()?.includes(input.toLowerCase())
-              )
-              .map((item: any) => item.name);
-          }
-
-          return this.searchResults.filter((item: any) =>
-            item?.toLowerCase()?.includes(input.toLowerCase())
-          );
-        }
-
-        return [];
+        return this.searchResults?.length > 0
+          ? this.selectSearchResult(input)
+          : [];
       },
       onUpdate: (results: any) => {
         if (this.inputElement.value && results.length === 0) {
@@ -173,10 +173,8 @@ export default class AutoComplete extends Vue {
           } else {
             this.selected = result;
           }
-          this.selectedValue = result;
+          this.selectedValue = result ? result : "";
           this.inputElement.blur();
-          this.$emit("input", this.selectedValue);
-          this.$emit("selected", this.selected);
         }
       }
     } as any);
@@ -189,6 +187,25 @@ export default class AutoComplete extends Vue {
     const events = Object.assign({}, this.$listeners);
     delete events.input;
     return events;
+  }
+
+  /**
+   * select the search result
+   */
+  private selectSearchResult(input: string) {
+    // search objects array with name attribute
+    if (!this.isString(this.searchResults[0])) {
+      return this.searchResults
+        .filter((item: any) =>
+          item.name?.toLowerCase()?.includes(input.toLowerCase())
+        )
+        .map((item: any) => item.name);
+    }
+
+    // search string array
+    return this.searchResults.filter((item: any) =>
+      item?.toLowerCase()?.includes(input.toLowerCase())
+    );
   }
 
   /**
@@ -211,7 +228,7 @@ export default class AutoComplete extends Vue {
       return upperCaseReplaceResult;
     }
 
-    return "";
+    return result;
   }
 
   /**

@@ -457,6 +457,35 @@ module.exports = Object.is || function is(x, y) {
 
 /***/ }),
 
+/***/ "13d5":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var $reduce = __webpack_require__("d58f").left;
+var arrayMethodIsStrict = __webpack_require__("a640");
+var arrayMethodUsesToLength = __webpack_require__("ae40");
+var CHROME_VERSION = __webpack_require__("2d00");
+var IS_NODE = __webpack_require__("605d");
+
+var STRICT_METHOD = arrayMethodIsStrict('reduce');
+var USES_TO_LENGTH = arrayMethodUsesToLength('reduce', { 1: 0 });
+// Chrome 80-82 has a critical bug
+// https://bugs.chromium.org/p/chromium/issues/detail?id=1049982
+var CHROME_BUG = !IS_NODE && CHROME_VERSION > 79 && CHROME_VERSION < 83;
+
+// `Array.prototype.reduce` method
+// https://tc39.es/ecma262/#sec-array.prototype.reduce
+$({ target: 'Array', proto: true, forced: !STRICT_METHOD || !USES_TO_LENGTH || CHROME_BUG }, {
+  reduce: function reduce(callbackfn /* , initialValue */) {
+    return $reduce(this, callbackfn, arguments.length, arguments.length > 1 ? arguments[1] : undefined);
+  }
+});
+
+
+/***/ }),
+
 /***/ "14c3":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5410,6 +5439,53 @@ module.exports = function (it, TAG, STATIC) {
   if (it && !has(it = STATIC ? it : it.prototype, TO_STRING_TAG)) {
     defineProperty(it, TO_STRING_TAG, { configurable: true, value: TAG });
   }
+};
+
+
+/***/ }),
+
+/***/ "d58f":
+/***/ (function(module, exports, __webpack_require__) {
+
+var aFunction = __webpack_require__("1c0b");
+var toObject = __webpack_require__("7b0b");
+var IndexedObject = __webpack_require__("44ad");
+var toLength = __webpack_require__("50c4");
+
+// `Array.prototype.{ reduce, reduceRight }` methods implementation
+var createMethod = function (IS_RIGHT) {
+  return function (that, callbackfn, argumentsLength, memo) {
+    aFunction(callbackfn);
+    var O = toObject(that);
+    var self = IndexedObject(O);
+    var length = toLength(O.length);
+    var index = IS_RIGHT ? length - 1 : 0;
+    var i = IS_RIGHT ? -1 : 1;
+    if (argumentsLength < 2) while (true) {
+      if (index in self) {
+        memo = self[index];
+        index += i;
+        break;
+      }
+      index += i;
+      if (IS_RIGHT ? index < 0 : length <= index) {
+        throw TypeError('Reduce of empty array with no initial value');
+      }
+    }
+    for (;IS_RIGHT ? index >= 0 : length > index; index += i) if (index in self) {
+      memo = callbackfn(memo, self[index], index, O);
+    }
+    return memo;
+  };
+};
+
+module.exports = {
+  // `Array.prototype.reduce` method
+  // https://tc39.es/ecma262/#sec-array.prototype.reduce
+  left: createMethod(false),
+  // `Array.prototype.reduceRight` method
+  // https://tc39.es/ecma262/#sec-array.prototype.reduceright
+  right: createMethod(true)
 };
 
 
@@ -26274,12 +26350,12 @@ var LinearProgress_component = normalizeComponent(
 )
 
 /* harmony default export */ var components_LinearProgress = (LinearProgress_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1b4f578b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AutoComplete.vue?vue&type=template&id=655e695d&
-var AutoCompletevue_type_template_id_655e695d_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',_vm._b({staticClass:"mdc-autocomplete",attrs:{"id":_vm.id}},"div",_vm._d({},[_vm.element.dataid,'autocomplete-' + _vm._uid])),[_c('div',{staticClass:"autocomplete-input"},[_c('TextField',_vm._g({attrs:{"type":_vm.type,"value":_vm.value,"variant":_vm.variant,"label":_vm.label,"name":_vm.name,"shaped":_vm.shaped,"leftIcon":_vm.leftIcon,"rightIcon":_vm.rightIcon,"helperText":_vm.helperText,"required":_vm.required,"disabled":_vm.disabled,"maxlength":_vm.maxlength,"pattern":_vm.pattern,"title":_vm.title}},_vm.inputListeners()))],1),_c('ul',{staticClass:"autocomplete-result-list"}),_c('ul',{staticClass:"autocomplete-result-list autocomplete-no-result",attrs:{"visible":"false"}},[_c('li',{staticClass:"autocomplete-result"},[_vm._v(" "+_vm._s(_vm.noResultLabel)+" ")])])])}
-var AutoCompletevue_type_template_id_655e695d_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1b4f578b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AutoComplete.vue?vue&type=template&id=74d163b4&
+var AutoCompletevue_type_template_id_74d163b4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',_vm._b({staticClass:"mdc-autocomplete",attrs:{"id":_vm.id}},"div",_vm._d({},[_vm.element.dataid,'autocomplete-' + _vm._uid])),[_c('div',{staticClass:"autocomplete-input"},[_c('TextField',_vm._g({ref:'autocomplete-textfield' + _vm._uid,attrs:{"type":_vm.type,"value":_vm.value,"variant":_vm.variant,"label":_vm.label,"name":_vm.name,"shaped":_vm.shaped,"leftIcon":_vm.leftIcon,"rightIcon":_vm.rightIcon,"helperText":_vm.helperText,"required":_vm.required,"disabled":_vm.disabled,"maxlength":_vm.maxlength,"pattern":_vm.pattern,"title":_vm.title}},_vm.inputListeners()))],1),_c('ul',{staticClass:"autocomplete-result-list"}),_c('ul',{staticClass:"autocomplete-result-list autocomplete-no-result",attrs:{"visible":"false"}},[_c('li',{staticClass:"autocomplete-result"},[_vm._v(" "+_vm._s(_vm.noResultLabel)+" ")])])])}
+var AutoCompletevue_type_template_id_74d163b4_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/AutoComplete.vue?vue&type=template&id=655e695d&
+// CONCATENATED MODULE: ./src/components/AutoComplete.vue?vue&type=template&id=74d163b4&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.find.js
 var es_array_find = __webpack_require__("7db0");
@@ -26293,6 +26369,9 @@ var es_array_join = __webpack_require__("a15b");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
 var es_function_name = __webpack_require__("b0c0");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.promise.js
+var es_promise = __webpack_require__("e6cf");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.constructor.js
 var es_regexp_constructor = __webpack_require__("4d63");
 
@@ -26304,9 +26383,6 @@ var es_string_search = __webpack_require__("841c");
 
 // EXTERNAL MODULE: ./node_modules/regenerator-runtime/runtime.js
 var runtime = __webpack_require__("96cf");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.promise.js
-var es_promise = __webpack_require__("e6cf");
 
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
 
@@ -26347,59 +26423,31 @@ function _asyncToGenerator(fn) {
     });
   };
 }
-// CONCATENATED MODULE: ./node_modules/@trevoreyre/autocomplete-js/dist/autocomplete.esm.js
-function autocomplete_esm_classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.reduce.js
+var es_array_reduce = __webpack_require__("13d5");
 
-function autocomplete_esm_defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function autocomplete_esm_createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) autocomplete_esm_defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) autocomplete_esm_defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-function autocomplete_esm_defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
+// CONCATENATED MODULE: ./src/vendor/autocomplete/autocomplete/util/matches.js
 // Polyfill for element.matches, to support Internet Explorer. It's a relatively
 // simple polyfill, so we'll just include it rather than require the user to
 // include the polyfill themselves. Adapted from
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
-var autocomplete_esm_matches = function matches(element, selector) {
+var matches_matches = function matches(element, selector) {
   return element.matches ? element.matches(selector) : element.msMatchesSelector ? element.msMatchesSelector(selector) : element.webkitMatchesSelector ? element.webkitMatchesSelector(selector) : null;
 };
 
+/* harmony default export */ var util_matches = (matches_matches);
+// CONCATENATED MODULE: ./src/vendor/autocomplete/autocomplete/util/closest.js
 // Polyfill for element.closest, to support Internet Explorer. It's a relatively
+// simple polyfill, so we'll just include it rather than require the user to
+// include the polyfill themselves. Adapted from
+// https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
 
-var closestPolyfill = function closestPolyfill(el, selector) {
+
+var closest_closestPolyfill = function closestPolyfill(el, selector) {
   var element = el;
 
   while (element && element.nodeType === 1) {
-    if (autocomplete_esm_matches(element, selector)) {
+    if (util_matches(element, selector)) {
       return element;
     }
 
@@ -26409,17 +26457,30 @@ var closestPolyfill = function closestPolyfill(el, selector) {
   return null;
 };
 
-var autocomplete_esm_closest = function closest(element, selector) {
-  return element.closest ? element.closest(selector) : closestPolyfill(element, selector);
+var closest_closest = function closest(element, selector) {
+  return element.closest ? element.closest(selector) : closest_closestPolyfill(element, selector);
 };
 
+/* harmony default export */ var util_closest = (closest_closest);
+// CONCATENATED MODULE: ./src/vendor/autocomplete/autocomplete/util/isPromise.js
 // Returns true if the value has a "then" function. Adapted from
 // https://github.com/graphql/graphql-js/blob/499a75939f70c4863d44149371d6a99d57ff7c35/src/jsutils/isPromise.js
 var isPromise = function isPromise(value) {
-  return Boolean(value && typeof value.then === 'function');
+  return Boolean(value && typeof value.then === "function");
 };
 
-var AutocompleteCore = function AutocompleteCore() {
+/* harmony default export */ var util_isPromise = (isPromise);
+// CONCATENATED MODULE: ./src/vendor/autocomplete/autocomplete/AutocompleteCore.js
+
+
+
+
+
+
+
+
+
+var AutocompleteCore_AutocompleteCore = function AutocompleteCore() {
   var _this = this;
 
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -26443,17 +26504,29 @@ var AutocompleteCore = function AutocompleteCore() {
       _ref$onLoaded = _ref.onLoaded,
       onLoaded = _ref$onLoaded === void 0 ? function () {} : _ref$onLoaded;
 
-  autocomplete_esm_classCallCheck(this, AutocompleteCore);
+  _classCallCheck(this, AutocompleteCore);
 
-  autocomplete_esm_defineProperty(this, "value", '');
+  _defineProperty(this, "value", "");
 
-  autocomplete_esm_defineProperty(this, "searchCounter", 0);
+  _defineProperty(this, "searchCounter", 0);
 
-  autocomplete_esm_defineProperty(this, "results", []);
+  _defineProperty(this, "results", []);
 
-  autocomplete_esm_defineProperty(this, "selectedIndex", -1);
+  _defineProperty(this, "selectedIndex", -1);
 
-  autocomplete_esm_defineProperty(this, "handleInput", function (event) {
+  _defineProperty(this, "destroy", function () {
+    _this.search = null;
+    _this.setValue = null;
+    _this.setAttribute = null;
+    _this.onUpdate = null;
+    _this.onSubmit = null;
+    _this.onShow = null;
+    _this.onHide = null;
+    _this.onLoading = null;
+    _this.onLoaded = null;
+  });
+
+  _defineProperty(this, "handleInput", function (event) {
     var value = event.target.value;
 
     _this.updateResults(value);
@@ -26461,18 +26534,18 @@ var AutocompleteCore = function AutocompleteCore() {
     _this.value = value;
   });
 
-  autocomplete_esm_defineProperty(this, "handleKeyDown", function (event) {
+  _defineProperty(this, "handleKeyDown", function (event) {
     var key = event.key;
 
     switch (key) {
-      case 'Up': // IE/Edge
+      case "Up": // IE/Edge
 
-      case 'Down': // IE/Edge
+      case "Down": // IE/Edge
 
-      case 'ArrowUp':
-      case 'ArrowDown':
+      case "ArrowUp":
+      case "ArrowDown":
         {
-          var selectedIndex = key === 'ArrowUp' || key === 'Up' ? _this.selectedIndex - 1 : _this.selectedIndex + 1;
+          var selectedIndex = key === "ArrowUp" || key === "Up" ? _this.selectedIndex - 1 : _this.selectedIndex + 1;
           event.preventDefault();
 
           _this.handleArrows(selectedIndex);
@@ -26480,14 +26553,7 @@ var AutocompleteCore = function AutocompleteCore() {
           break;
         }
 
-      case 'Tab':
-        {
-          _this.selectResult();
-
-          break;
-        }
-
-      case 'Enter':
+      case "Tab":
         {
           var selectedResult = _this.results[_this.selectedIndex];
 
@@ -26498,9 +26564,20 @@ var AutocompleteCore = function AutocompleteCore() {
           break;
         }
 
-      case 'Esc': // IE/Edge
+      case "Enter":
+        {
+          var _selectedResult = _this.results[_this.selectedIndex];
 
-      case 'Escape':
+          _this.selectResult();
+
+          _this.onSubmit(_selectedResult);
+
+          break;
+        }
+
+      case "Esc": // IE/Edge
+
+      case "Escape":
         {
           _this.hideResults();
 
@@ -26514,7 +26591,7 @@ var AutocompleteCore = function AutocompleteCore() {
     }
   });
 
-  autocomplete_esm_defineProperty(this, "handleFocus", function (event) {
+  _defineProperty(this, "handleFocus", function (event) {
     var value = event.target.value;
 
     _this.updateResults(value);
@@ -26522,17 +26599,17 @@ var AutocompleteCore = function AutocompleteCore() {
     _this.value = value;
   });
 
-  autocomplete_esm_defineProperty(this, "handleBlur", function () {
+  _defineProperty(this, "handleBlur", function () {
     _this.hideResults();
   });
 
-  autocomplete_esm_defineProperty(this, "handleResultMouseDown", function (event) {
+  _defineProperty(this, "handleResultMouseDown", function (event) {
     event.preventDefault();
   });
 
-  autocomplete_esm_defineProperty(this, "handleResultClick", function (event) {
+  _defineProperty(this, "handleResultClick", function (event) {
     var target = event.target;
-    var result = autocomplete_esm_closest(target, '[data-result-index]');
+    var result = util_closest(target, "[data-result-index]");
 
     if (result) {
       _this.selectedIndex = parseInt(result.dataset.resultIndex, 10);
@@ -26544,7 +26621,7 @@ var AutocompleteCore = function AutocompleteCore() {
     }
   });
 
-  autocomplete_esm_defineProperty(this, "handleArrows", function (selectedIndex) {
+  _defineProperty(this, "handleArrows", function (selectedIndex) {
     // Loop selectedIndex back to first or last result if out of bounds
     var resultsCount = _this.results.length;
     _this.selectedIndex = (selectedIndex % resultsCount + resultsCount) % resultsCount; // Update results and aria attributes
@@ -26552,7 +26629,7 @@ var AutocompleteCore = function AutocompleteCore() {
     _this.onUpdate(_this.results, _this.selectedIndex);
   });
 
-  autocomplete_esm_defineProperty(this, "selectResult", function () {
+  _defineProperty(this, "selectResult", function () {
     var selectedResult = _this.results[_this.selectedIndex];
 
     if (selectedResult) {
@@ -26562,7 +26639,7 @@ var AutocompleteCore = function AutocompleteCore() {
     _this.hideResults();
   });
 
-  autocomplete_esm_defineProperty(this, "updateResults", function (value) {
+  _defineProperty(this, "updateResults", function (value) {
     var currentSearch = ++_this.searchCounter;
 
     _this.onLoading();
@@ -26590,26 +26667,26 @@ var AutocompleteCore = function AutocompleteCore() {
     });
   });
 
-  autocomplete_esm_defineProperty(this, "showResults", function () {
-    _this.setAttribute('aria-expanded', true);
+  _defineProperty(this, "showResults", function () {
+    _this.setAttribute("aria-expanded", true);
 
     _this.onShow();
   });
 
-  autocomplete_esm_defineProperty(this, "hideResults", function () {
+  _defineProperty(this, "hideResults", function () {
     _this.selectedIndex = -1;
     _this.results = [];
 
-    _this.setAttribute('aria-expanded', false);
+    _this.setAttribute("aria-expanded", false);
 
-    _this.setAttribute('aria-activedescendant', '');
+    _this.setAttribute("aria-activedescendant", "");
 
     _this.onUpdate(_this.results, _this.selectedIndex);
 
     _this.onHide();
   });
 
-  autocomplete_esm_defineProperty(this, "checkSelectedResultVisible", function (resultsElement) {
+  _defineProperty(this, "checkSelectedResultVisible", function (resultsElement) {
     var selectedResultElement = resultsElement.querySelector("[data-result-index=\"".concat(_this.selectedIndex, "\"]"));
 
     if (!selectedResultElement) {
@@ -26628,7 +26705,7 @@ var AutocompleteCore = function AutocompleteCore() {
     }
   });
 
-  this.search = isPromise(search) ? search : function (value) {
+  this.search = util_isPromise(search) ? search : function (value) {
     return Promise.resolve(search(value));
   };
   this.autoSelect = autoSelect;
@@ -26642,15 +26719,20 @@ var AutocompleteCore = function AutocompleteCore() {
   this.onLoaded = onLoaded;
 };
 
+/* harmony default export */ var autocomplete_AutocompleteCore = (AutocompleteCore_AutocompleteCore);
+// CONCATENATED MODULE: ./src/vendor/autocomplete/autocomplete/util/uniqueId.js
+
 // Generates a unique ID, with optional prefix. Adapted from
 // https://github.com/lodash/lodash/blob/61acdd0c295e4447c9c10da04e287b1ebffe452c/uniqueId.js
-var autocomplete_esm_idCounter = 0;
+var uniqueId_idCounter = 0;
 
 var uniqueId = function uniqueId() {
-  var prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  return "".concat(prefix).concat(++autocomplete_esm_idCounter);
+  var prefix = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+  return "".concat(prefix).concat(++uniqueId_idCounter);
 };
 
+/* harmony default export */ var util_uniqueId = (uniqueId);
+// CONCATENATED MODULE: ./src/vendor/autocomplete/autocomplete/util/getRelativePosition.js
 // Calculates whether element2 should be above or below element1. Always
 // places element2 below unless all of the following:
 // 1. There isn't enough visible viewport below to fit element2
@@ -26666,9 +26748,11 @@ var getRelativePosition = function getRelativePosition(element1, element2) {
   window.innerHeight - position1.bottom < position1.top &&
   /* 3 */
   window.pageYOffset + position1.top - position2.height > 0;
-  return positionAbove ? 'above' : 'below';
+  return positionAbove ? "above" : "below";
 };
 
+/* harmony default export */ var util_getRelativePosition = (getRelativePosition);
+// CONCATENATED MODULE: ./src/vendor/autocomplete/autocomplete/util/debounce.js
 // Credit David Walsh (https://davidwalsh.name/javascript-debounce-function)
 // Returns a function, that, as long as it continues to be invoked, will not
 // be triggered. The function will be called after it stops being called for
@@ -26692,39 +26776,53 @@ var debounce = function debounce(func, wait, immediate) {
   };
 };
 
+/* harmony default export */ var util_debounce = (debounce);
+// CONCATENATED MODULE: ./src/vendor/autocomplete/autocomplete-js/Autocomplete.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // Creates a props object with overridden toString function. toString returns an attributes
 // string in the format: `key1="value1" key2="value2"` for easy use in an HTML string.
 
-var Props =
-/*#__PURE__*/
-function () {
+var Autocomplete_Props = /*#__PURE__*/function () {
   function Props(index, selectedIndex, baseClass) {
-    autocomplete_esm_classCallCheck(this, Props);
+    _classCallCheck(this, Props);
 
     this.id = "".concat(baseClass, "-result-").concat(index);
-    this["class"] = "".concat(baseClass, "-result");
-    this['data-result-index'] = index;
-    this.role = 'option';
+    this.class = "".concat(baseClass, "-result");
+    this["data-result-index"] = index;
+    this.role = "option";
 
     if (index === selectedIndex) {
-      this['aria-selected'] = 'true';
+      this["aria-selected"] = "true";
     }
   }
 
-  autocomplete_esm_createClass(Props, [{
+  _createClass(Props, [{
     key: "toString",
     value: function toString() {
       var _this = this;
 
       return Object.keys(this).reduce(function (str, key) {
         return "".concat(str, " ").concat(key, "=\"").concat(_this[key], "\"");
-      }, '');
+      }, "");
     }
   }]);
 
   return Props;
 }();
 
-var Autocomplete = function Autocomplete(root) {
+var Autocomplete_Autocomplete = function Autocomplete(root) {
   var _this2 = this;
 
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
@@ -26734,7 +26832,7 @@ var Autocomplete = function Autocomplete(root) {
       _ref$onUpdate = _ref.onUpdate,
       onUpdate = _ref$onUpdate === void 0 ? function () {} : _ref$onUpdate,
       _ref$baseClass = _ref.baseClass,
-      baseClass = _ref$baseClass === void 0 ? 'autocomplete' : _ref$baseClass,
+      baseClass = _ref$baseClass === void 0 ? "autocomplete" : _ref$baseClass,
       autoSelect = _ref.autoSelect,
       _ref$getResultValue = _ref.getResultValue,
       getResultValue = _ref$getResultValue === void 0 ? function (result) {
@@ -26744,96 +26842,123 @@ var Autocomplete = function Autocomplete(root) {
       _ref$debounceTime = _ref.debounceTime,
       debounceTime = _ref$debounceTime === void 0 ? 0 : _ref$debounceTime;
 
-  autocomplete_esm_classCallCheck(this, Autocomplete);
+  _classCallCheck(this, Autocomplete);
 
-  autocomplete_esm_defineProperty(this, "expanded", false);
+  _defineProperty(this, "expanded", false);
 
-  autocomplete_esm_defineProperty(this, "loading", false);
+  _defineProperty(this, "loading", false);
 
-  autocomplete_esm_defineProperty(this, "position", {});
+  _defineProperty(this, "position", {});
 
-  autocomplete_esm_defineProperty(this, "resetPosition", true);
+  _defineProperty(this, "resetPosition", true);
 
-  autocomplete_esm_defineProperty(this, "initialize", function () {
-    _this2.root.style.position = 'relative';
+  _defineProperty(this, "initialize", function () {
+    _this2.root.style.position = "relative";
 
-    _this2.input.setAttribute('role', 'combobox');
+    _this2.input.setAttribute("role", "combobox");
 
-    _this2.input.setAttribute('autocomplete', 'off');
+    _this2.input.setAttribute("autocomplete", "off");
 
-    _this2.input.setAttribute('autocapitalize', 'off');
+    _this2.input.setAttribute("autocapitalize", "off");
 
-    _this2.input.setAttribute('autocorrect', 'off');
+    _this2.input.setAttribute("autocorrect", "off");
 
-    _this2.input.setAttribute('spellcheck', 'false');
+    _this2.input.setAttribute("spellcheck", "false");
 
-    _this2.input.setAttribute('aria-autocomplete', 'list');
+    _this2.input.setAttribute("aria-autocomplete", "list");
 
-    _this2.input.setAttribute('aria-haspopup', 'listbox');
+    _this2.input.setAttribute("aria-haspopup", "listbox");
 
-    _this2.input.setAttribute('aria-expanded', 'false');
+    _this2.input.setAttribute("aria-expanded", "false");
 
-    _this2.resultList.setAttribute('role', 'listbox');
+    _this2.resultList.setAttribute("role", "listbox");
 
-    _this2.resultList.style.position = 'absolute';
-    _this2.resultList.style.zIndex = '1';
-    _this2.resultList.style.width = '100%';
-    _this2.resultList.style.boxSizing = 'border-box'; // Generate ID for results list if it doesn't have one
+    _this2.resultList.style.position = "absolute";
+    _this2.resultList.style.zIndex = "1";
+    _this2.resultList.style.width = "100%";
+    _this2.resultList.style.boxSizing = "border-box"; // Generate ID for results list if it doesn't have one
 
     if (!_this2.resultList.id) {
-      _this2.resultList.id = uniqueId("".concat(_this2.baseClass, "-result-list-"));
+      _this2.resultList.id = util_uniqueId("".concat(_this2.baseClass, "-result-list-"));
     }
 
-    _this2.input.setAttribute('aria-owns', _this2.resultList.id);
+    _this2.input.setAttribute("aria-owns", _this2.resultList.id);
 
-    document.body.addEventListener('click', _this2.handleDocumentClick);
+    document.body.addEventListener("click", _this2.handleDocumentClick);
 
-    _this2.input.addEventListener('input', _this2.core.handleInput);
+    _this2.input.addEventListener("input", _this2.core.handleInput);
 
-    _this2.input.addEventListener('keydown', _this2.core.handleKeyDown);
+    _this2.input.addEventListener("keydown", _this2.core.handleKeyDown);
 
-    _this2.input.addEventListener('focus', _this2.core.handleFocus);
+    _this2.input.addEventListener("focus", _this2.core.handleFocus);
 
-    _this2.input.addEventListener('blur', _this2.core.handleBlur);
+    _this2.input.addEventListener("blur", _this2.core.handleBlur);
 
-    _this2.resultList.addEventListener('mousedown', _this2.core.handleResultMouseDown);
+    _this2.resultList.addEventListener("mousedown", _this2.core.handleResultMouseDown);
 
-    _this2.resultList.addEventListener('click', _this2.core.handleResultClick);
+    _this2.resultList.addEventListener("click", _this2.core.handleResultClick);
 
     _this2.updateStyle();
   });
 
-  autocomplete_esm_defineProperty(this, "setAttribute", function (attribute, value) {
+  _defineProperty(this, "destroy", function () {
+    document.body.removeEventListener("click", _this2.handleDocumentClick);
+
+    _this2.input.removeEventListener("input", _this2.core.handleInput);
+
+    _this2.input.removeEventListener("keydown", _this2.core.handleKeyDown);
+
+    _this2.input.removeEventListener("focus", _this2.core.handleFocus);
+
+    _this2.input.removeEventListener("blur", _this2.core.handleBlur);
+
+    _this2.resultList.removeEventListener("mousedown", _this2.core.handleResultMouseDown);
+
+    _this2.resultList.removeEventListener("click", _this2.core.handleResultClick);
+
+    _this2.root = null;
+    _this2.input = null;
+    _this2.resultList = null;
+    _this2.getResultValue = null;
+    _this2.onUpdate = null;
+    _this2.renderResult = null;
+
+    _this2.core.destroy();
+
+    _this2.core = null;
+  });
+
+  _defineProperty(this, "setAttribute", function (attribute, value) {
     _this2.input.setAttribute(attribute, value);
   });
 
-  autocomplete_esm_defineProperty(this, "setValue", function (result) {
-    _this2.input.value = result ? _this2.getResultValue(result) : '';
+  _defineProperty(this, "setValue", function (result) {
+    _this2.input.value = result ? _this2.getResultValue(result) : "";
   });
 
-  autocomplete_esm_defineProperty(this, "renderResult", function (result, props) {
+  _defineProperty(this, "renderResult", function (result, props) {
     return "<li ".concat(props, ">").concat(_this2.getResultValue(result), "</li>");
   });
 
-  autocomplete_esm_defineProperty(this, "handleUpdate", function (results, selectedIndex) {
-    _this2.resultList.innerHTML = '';
+  _defineProperty(this, "handleUpdate", function (results, selectedIndex) {
+    _this2.resultList.innerHTML = "";
     results.forEach(function (result, index) {
-      var props = new Props(index, selectedIndex, _this2.baseClass);
+      var props = new Autocomplete_Props(index, selectedIndex, _this2.baseClass);
 
       var resultHTML = _this2.renderResult(result, props);
 
-      if (typeof resultHTML === 'string') {
-        _this2.resultList.insertAdjacentHTML('beforeend', resultHTML);
+      if (typeof resultHTML === "string") {
+        _this2.resultList.insertAdjacentHTML("beforeend", resultHTML);
       } else {
-        _this2.resultList.insertAdjacentElement('beforeend', resultHTML);
+        _this2.resultList.insertAdjacentElement("beforeend", resultHTML);
       }
     });
 
-    _this2.input.setAttribute('aria-activedescendant', selectedIndex > -1 ? "".concat(_this2.baseClass, "-result-").concat(selectedIndex) : '');
+    _this2.input.setAttribute("aria-activedescendant", selectedIndex > -1 ? "".concat(_this2.baseClass, "-result-").concat(selectedIndex) : "");
 
     if (_this2.resetPosition) {
       _this2.resetPosition = false;
-      _this2.position = getRelativePosition(_this2.input, _this2.resultList);
+      _this2.position = util_getRelativePosition(_this2.input, _this2.resultList);
 
       _this2.updateStyle();
     }
@@ -26843,32 +26968,32 @@ var Autocomplete = function Autocomplete(root) {
     _this2.onUpdate(results, selectedIndex);
   });
 
-  autocomplete_esm_defineProperty(this, "handleShow", function () {
+  _defineProperty(this, "handleShow", function () {
     _this2.expanded = true;
 
     _this2.updateStyle();
   });
 
-  autocomplete_esm_defineProperty(this, "handleHide", function () {
+  _defineProperty(this, "handleHide", function () {
     _this2.expanded = false;
     _this2.resetPosition = true;
 
     _this2.updateStyle();
   });
 
-  autocomplete_esm_defineProperty(this, "handleLoading", function () {
+  _defineProperty(this, "handleLoading", function () {
     _this2.loading = true;
 
     _this2.updateStyle();
   });
 
-  autocomplete_esm_defineProperty(this, "handleLoaded", function () {
+  _defineProperty(this, "handleLoaded", function () {
     _this2.loading = false;
 
     _this2.updateStyle();
   });
 
-  autocomplete_esm_defineProperty(this, "handleDocumentClick", function (event) {
+  _defineProperty(this, "handleDocumentClick", function (event) {
     if (_this2.root.contains(event.target)) {
       return;
     }
@@ -26876,34 +27001,34 @@ var Autocomplete = function Autocomplete(root) {
     _this2.core.hideResults();
   });
 
-  autocomplete_esm_defineProperty(this, "updateStyle", function () {
+  _defineProperty(this, "updateStyle", function () {
     _this2.root.dataset.expanded = _this2.expanded;
     _this2.root.dataset.loading = _this2.loading;
     _this2.root.dataset.position = _this2.position;
-    _this2.resultList.style.visibility = _this2.expanded ? 'visible' : 'hidden';
-    _this2.resultList.style.pointerEvents = _this2.expanded ? 'auto' : 'none';
+    _this2.resultList.style.visibility = _this2.expanded ? "visible" : "hidden";
+    _this2.resultList.style.pointerEvents = _this2.expanded ? "auto" : "none";
 
-    if (_this2.position === 'below') {
+    if (_this2.position === "below") {
       _this2.resultList.style.bottom = null;
-      _this2.resultList.style.top = '100%';
+      _this2.resultList.style.top = "100%";
     } else {
       _this2.resultList.style.top = null;
-      _this2.resultList.style.bottom = '100%';
+      _this2.resultList.style.bottom = "100%";
     }
   });
 
-  this.root = typeof root === 'string' ? document.querySelector(root) : root;
-  this.input = this.root.querySelector('input');
-  this.resultList = this.root.querySelector('ul');
+  this.root = typeof root === "string" ? document.querySelector(root) : root;
+  this.input = this.root.querySelector("input");
+  this.resultList = this.root.querySelector("ul");
   this.baseClass = baseClass;
   this.getResultValue = getResultValue;
   this.onUpdate = onUpdate;
 
-  if (typeof renderResult === 'function') {
+  if (typeof renderResult === "function") {
     this.renderResult = renderResult;
   }
 
-  var core = new AutocompleteCore({
+  var core = new autocomplete_AutocompleteCore({
     search: search,
     autoSelect: autoSelect,
     setValue: this.setValue,
@@ -26917,7 +27042,7 @@ var Autocomplete = function Autocomplete(root) {
   });
 
   if (debounceTime > 0) {
-    core.handleInput = debounce(core.handleInput, debounceTime);
+    core.handleInput = util_debounce(core.handleInput, debounceTime);
   }
 
   this.core = core;
@@ -26925,8 +27050,10 @@ var Autocomplete = function Autocomplete(root) {
 } // Set up aria attributes and events
 ;
 
-/* harmony default export */ var autocomplete_esm = (Autocomplete);
+/* harmony default export */ var autocomplete_js_Autocomplete = (Autocomplete_Autocomplete);
+// CONCATENATED MODULE: ./src/vendor/autocomplete/autocomplete-js/index.js
 
+/* harmony default export */ var autocomplete_js = (autocomplete_js_Autocomplete);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-1!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/AutoComplete.vue?vue&type=script&lang=ts&
 
 
@@ -26953,6 +27080,9 @@ var Autocomplete = function Autocomplete(root) {
 
 
 
+ // import Autocomplete from "@trevoreyre/autocomplete-js";
+
+
 
 
 var AutoCompletevue_type_script_lang_ts_AutoComplete = /*#__PURE__*/function (_Vue) {
@@ -26970,76 +27100,82 @@ var AutoCompletevue_type_script_lang_ts_AutoComplete = /*#__PURE__*/function (_V
     _this.autocompleteInputDiv = null;
     _this.inputElement = null;
     _this.selected = null;
-    _this.selectedValue = null;
+    _this.selectedValue = "";
     _this.searchResults = [];
     _this.element = new VComponent_VComponent();
+    _this.textFieldMdcComponent = null;
     return _this;
   }
 
   _createClass(AutoComplete, [{
-    key: "mounted",
-    value: function mounted() {
+    key: "onValueChanged",
+    value: function onValueChanged(value) {
       var _this2 = this;
 
+      this.selectedValue = value;
+
+      if (this.selectedValue && !this.selected) {
+        Promise.resolve(this.search(this.selectedValue)).then(function (result) {
+          _this2.searchResults = result;
+
+          if (!_this2.isString(_this2.searchResults[0])) {
+            _this2.selected = _this2.searchResults.find(function (item) {
+              var _item$name;
+
+              return ((_item$name = item.name) === null || _item$name === void 0 ? void 0 : _item$name.toLowerCase()) === _this2.selectedValue.toLowerCase();
+            });
+          } else {
+            _this2.selected = _this2.searchResults.find(function (item) {
+              return (item === null || item === void 0 ? void 0 : item.toLowerCase()) === _this2.selectedValue.toLowerCase();
+            });
+          }
+
+          _this2.$emit("selected", _this2.selected);
+        });
+      }
+    }
+  }, {
+    key: "mounted",
+    value: function mounted() {
+      var _this3 = this;
+
+      // init elements
       this.element.dom = document.querySelector("div[".concat(this.element.dataid, "=autocomplete-").concat(this._uid, "]"));
       this.autocompleteDiv = this.element.dom;
       this.autocompleteInputDiv = this.autocompleteDiv.querySelector(".autocomplete-input");
       this.inputElement = this.autocompleteInputDiv.querySelector("input");
-      this.inputElement.addEventListener("keyup", function (e) {
-        var _this2$searchResults;
+      this.element.mdc = this.$refs["autocomplete-textfield".concat(this._uid)].element.mdc;
+      this.textFieldMdcComponent = this.element.mdc.textField; // add focus class to the input
 
-        _this2.selected = null;
-        _this2.selectedValue = ""; // select item with TAB key
-
-        if (e.keyCode === 9 && ((_this2$searchResults = _this2.searchResults) === null || _this2$searchResults === void 0 ? void 0 : _this2$searchResults.length) > 0) {
-          if (!_this2.isString(_this2.searchResults[0])) {
-            _this2.selected = _this2.searchResults.find(function (item) {
-              return item.name === _this2.inputElement.value;
-            });
-            _this2.selectedValue = _this2.selected.name;
-          } else {
-            _this2.selected = _this2.searchResults.find(function (item) {
-              return item === _this2.inputElement.value;
-            });
-            _this2.selectedValue = _this2.selected;
-          }
-
-          _this2.inputElement.blur();
-
-          _this2.$emit("input", _this2.selectedValue);
-
-          _this2.$emit("selected", _this2.selected);
-        } else {
-          _this2.$emit("selected", _this2.selected);
-        }
-      });
       this.inputElement.addEventListener("focus", function () {
-        _this2.autocompleteInputDiv.classList.add("focused");
-      });
+        _this3.autocompleteInputDiv.classList.add("focused");
+      }); // in blur, update element values
+
       this.inputElement.addEventListener("blur", function () {
-        _this2.autocompleteInputDiv.classList.remove("focused");
+        _this3.autocompleteInputDiv.classList.remove("focused");
 
-        _this2.inputElement.value = _this2.selectedValue;
-        _this2.searchResults = [];
-      });
-      this.inputElement.addEventListener("keydown", function (e) {
-        var _this2$searchResults2;
+        _this3.textFieldMdcComponent.value = _this3.selectedValue;
 
-        if (e.keyCode === 9 && ((_this2$searchResults2 = _this2.searchResults) === null || _this2$searchResults2 === void 0 ? void 0 : _this2$searchResults2.length) > 0) {
-          e.preventDefault();
-        }
+        _this3.$emit("input", _this3.selectedValue);
+
+        _this3.$emit("selected", _this3.selected);
+      }); // clear values when user change values
+
+      this.inputElement.addEventListener("keydown", function () {
+        _this3.selected = null;
+        _this3.selectedValue = "";
       });
-      new autocomplete_esm(this.autocompleteDiv, {
+      new autocomplete_js(this.autocompleteDiv, {
         autoSelect: true,
         search: function () {
           var _search = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(input) {
-            var _this2$searchResults3;
+            var _this3$searchResults;
 
             return regeneratorRuntime.wrap(function _callee$(_context) {
               while (1) {
                 switch (_context.prev = _context.next) {
                   case 0:
-                    if (!(!_this2.search || input.length < _this2.start)) {
+                    if (!(input.length < _this3.start)) {
                       _context.next = 2;
                       break;
                     }
@@ -27048,40 +27184,13 @@ var AutoCompletevue_type_script_lang_ts_AutoComplete = /*#__PURE__*/function (_V
 
                   case 2:
                     _context.next = 4;
-                    return _this2.search(input);
+                    return _this3.search(input);
 
                   case 4:
-                    _this2.searchResults = _context.sent;
+                    _this3.searchResults = _context.sent;
+                    return _context.abrupt("return", ((_this3$searchResults = _this3.searchResults) === null || _this3$searchResults === void 0 ? void 0 : _this3$searchResults.length) > 0 ? _this3.selectSearchResult(input) : []);
 
-                    if (!(((_this2$searchResults3 = _this2.searchResults) === null || _this2$searchResults3 === void 0 ? void 0 : _this2$searchResults3.length) > 0)) {
-                      _context.next = 9;
-                      break;
-                    }
-
-                    if (_this2.isString(_this2.searchResults[0])) {
-                      _context.next = 8;
-                      break;
-                    }
-
-                    return _context.abrupt("return", _this2.searchResults.filter(function (item) {
-                      var _item$name, _item$name$toLowerCas;
-
-                      return (_item$name = item.name) === null || _item$name === void 0 ? void 0 : (_item$name$toLowerCas = _item$name.toLowerCase()) === null || _item$name$toLowerCas === void 0 ? void 0 : _item$name$toLowerCas.includes(input.toLowerCase());
-                    }).map(function (item) {
-                      return item.name;
-                    }));
-
-                  case 8:
-                    return _context.abrupt("return", _this2.searchResults.filter(function (item) {
-                      var _item$toLowerCase;
-
-                      return item === null || item === void 0 ? void 0 : (_item$toLowerCase = item.toLowerCase()) === null || _item$toLowerCase === void 0 ? void 0 : _item$toLowerCase.includes(input.toLowerCase());
-                    }));
-
-                  case 9:
-                    return _context.abrupt("return", []);
-
-                  case 10:
+                  case 6:
                   case "end":
                     return _context.stop();
                 }
@@ -27096,34 +27205,30 @@ var AutoCompletevue_type_script_lang_ts_AutoComplete = /*#__PURE__*/function (_V
           return search;
         }(),
         onUpdate: function onUpdate(results) {
-          if (_this2.inputElement.value && results.length === 0) {
-            _this2.autocompleteDiv.classList.add("no-results");
+          if (_this3.inputElement.value && results.length === 0) {
+            _this3.autocompleteDiv.classList.add("no-results");
           } else {
-            _this2.autocompleteDiv.classList.remove("no-results");
+            _this3.autocompleteDiv.classList.remove("no-results");
           }
         },
         renderResult: function renderResult(result, props) {
-          return "\n        <li ".concat(props, ">\n          <div class=\"autocomplete-option\">\n            ").concat(_this2.replaceSelectedItem(result, _this2.inputElement.value), "\n          </div>\n        </li>\n      ");
+          return "\n        <li ".concat(props, ">\n          <div class=\"autocomplete-option\">\n            ").concat(_this3.replaceSelectedItem(result, _this3.inputElement.value), "\n          </div>\n        </li>\n      ");
         },
         onSubmit: function onSubmit(result) {
           if (result) {
-            var _this2$searchResults4;
+            var _this3$searchResults2;
 
-            if (!_this2.isString((_this2$searchResults4 = _this2.searchResults) === null || _this2$searchResults4 === void 0 ? void 0 : _this2$searchResults4[0])) {
-              _this2.selected = _this2.searchResults.filter(function (item) {
+            if (!_this3.isString((_this3$searchResults2 = _this3.searchResults) === null || _this3$searchResults2 === void 0 ? void 0 : _this3$searchResults2[0])) {
+              _this3.selected = _this3.searchResults.filter(function (item) {
                 return item.name === result;
               })[0];
             } else {
-              _this2.selected = result;
+              _this3.selected = result;
             }
 
-            _this2.selectedValue = result;
+            _this3.selectedValue = result ? result : "";
 
-            _this2.inputElement.blur();
-
-            _this2.$emit("input", _this2.selectedValue);
-
-            _this2.$emit("selected", _this2.selected);
+            _this3.inputElement.blur();
           }
         }
       });
@@ -27138,6 +27243,31 @@ var AutoCompletevue_type_script_lang_ts_AutoComplete = /*#__PURE__*/function (_V
       var events = Object.assign({}, this.$listeners);
       delete events.input;
       return events;
+    }
+    /**
+     * select the search result
+     */
+
+  }, {
+    key: "selectSearchResult",
+    value: function selectSearchResult(input) {
+      // search objects array with name attribute
+      if (!this.isString(this.searchResults[0])) {
+        return this.searchResults.filter(function (item) {
+          var _item$name2, _item$name2$toLowerCa;
+
+          return (_item$name2 = item.name) === null || _item$name2 === void 0 ? void 0 : (_item$name2$toLowerCa = _item$name2.toLowerCase()) === null || _item$name2$toLowerCa === void 0 ? void 0 : _item$name2$toLowerCa.includes(input.toLowerCase());
+        }).map(function (item) {
+          return item.name;
+        });
+      } // search string array
+
+
+      return this.searchResults.filter(function (item) {
+        var _item$toLowerCase;
+
+        return item === null || item === void 0 ? void 0 : (_item$toLowerCase = item.toLowerCase()) === null || _item$toLowerCase === void 0 ? void 0 : _item$toLowerCase.includes(input.toLowerCase());
+      });
     }
     /**
      * return a string based replace with b elements on selected items.
@@ -27160,7 +27290,7 @@ var AutoCompletevue_type_script_lang_ts_AutoComplete = /*#__PURE__*/function (_V
         return upperCaseReplaceResult;
       }
 
-      return "";
+      return result;
     }
     /**
      * check if a value is string.
@@ -27261,6 +27391,8 @@ __decorate([Object(external_vue_property_decorator_["Prop"])({
   default: 3
 })], AutoCompletevue_type_script_lang_ts_AutoComplete.prototype, "start", void 0);
 
+__decorate([Object(external_vue_property_decorator_["Watch"])("value")], AutoCompletevue_type_script_lang_ts_AutoComplete.prototype, "onValueChanged", null);
+
 AutoCompletevue_type_script_lang_ts_AutoComplete = __decorate([Object(external_vue_property_decorator_["Component"])({
   components: {
     TextField: components_TextField
@@ -27283,8 +27415,8 @@ var AutoCompletevue_type_style_index_0_lang_scss_ = __webpack_require__("1d6c");
 
 var AutoComplete_component = normalizeComponent(
   components_AutoCompletevue_type_script_lang_ts_,
-  AutoCompletevue_type_template_id_655e695d_render,
-  AutoCompletevue_type_template_id_655e695d_staticRenderFns,
+  AutoCompletevue_type_template_id_74d163b4_render,
+  AutoCompletevue_type_template_id_74d163b4_staticRenderFns,
   false,
   null,
   null,

@@ -26,11 +26,17 @@ export default class AutoComplete extends Vue {
     private selectedValue;
     private searchResults;
     element: VComponent;
+    private textFieldMdcComponent;
+    onValueChanged(value: string): void;
     mounted(): void;
     /**
      * emit the events of the TextField.
      */
     inputListeners(): Record<string, Function | Function[]>;
+    /**
+     * select the search result
+     */
+    private selectSearchResult;
     /**
      * return a string based replace with b elements on selected items.
      */
