@@ -1,4 +1,6 @@
 import { Vue } from "vue-property-decorator";
+import TopAppBar from "./TopAppBar.vue";
+import Drawer from "./Drawer.vue";
 export default class LayoutApp extends Vue {
     private id;
     private topAppMode;
@@ -8,9 +10,13 @@ export default class LayoutApp extends Vue {
     private drawerChange;
     private title;
     private titleHref;
-    readonly drawerModal: any;
-    readonly drawerSide: any;
-    readonly topAppBar: any;
+    readonly drawerModal: Drawer;
+    readonly drawerSide: Drawer;
+    readonly topAppBar: TopAppBar;
+    /**
+     * reload the nav items for the drawer
+     */
+    loadDrawerItems(): void;
     /**
      * return the active modal.
      */

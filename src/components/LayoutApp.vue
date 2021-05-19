@@ -80,9 +80,17 @@ export default class LayoutApp extends Vue {
   @Prop({ default: "Title" }) private title!: string;
   @Prop({ default: null }) private titleHref!: string;
 
-  @Ref("drawerModal") readonly drawerModal!: any;
-  @Ref("drawerSide") readonly drawerSide!: any;
-  @Ref("topAppBar") readonly topAppBar!: any;
+  @Ref("drawerModal") readonly drawerModal!: Drawer;
+  @Ref("drawerSide") readonly drawerSide!: Drawer;
+  @Ref("topAppBar") readonly topAppBar!: TopAppBar;
+
+  /**
+   * reload the nav items for the drawer
+   */
+  public loadDrawerItems() {
+    this.drawerModal.loadItems();
+    this.drawerSide.loadItems();
+  }
 
   /**
    * return the active modal.

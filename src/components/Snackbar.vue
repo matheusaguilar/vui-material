@@ -8,10 +8,10 @@
         <button
           type="button"
           class="mdc-button mdc-snackbar__action"
-          @click="clicked"
+          @click="action.call"
         >
           <div class="mdc-button__ripple"></div>
-          <span class="mdc-button__label">{{ action }}</span>
+          <span class="mdc-button__label">{{ action.label }}</span>
         </button>
       </div>
     </div>
@@ -24,22 +24,25 @@ import { VComponent } from "@/ts/VComponent";
 import { Component, Prop } from "vue-property-decorator";
 import { MDCSnackbar } from "@material/snackbar";
 
+interface Action {
+  call: Function;
+  label: string;
+}
+
 @Component
 export default class Snackbar extends Vue {
   @Prop() private id!: string;
-  @Prop({ default: "Text" }) private text!: string;
-  @Prop({ default: "Action" }) private action!: string;
 
   public element = new VComponent();
+  public text = "";
+  public action: Action | undefined;
 
-  open() {
+  open(text: string, action?: Action) {
+    this.text = text;
+    this.action = action;
     if (this.element.mdc) {
       this.element.mdc.open();
     }
-  }
-
-  clicked() {
-    this.$emit("click");
   }
 
   mounted() {

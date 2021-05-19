@@ -28,6 +28,11 @@
             >{{ item.icon }}</i
           >
           <span class="mdc-list-item__text">{{ item.name }}</span>
+          <i
+            class="mdc-drawer-notification material-icons"
+            v-show="item.notification"
+            >notifications</i
+          >
         </a>
       </nav>
     </div>
@@ -52,7 +57,7 @@ export default class Drawer extends Vue {
   @Prop({ default: null }) private items!: any[];
 
   public element = new VComponent();
-  private itemsParsed: any = [];
+  public itemsParsed: any = [];
   private variantClassesMap: any = {
     dismissible: " mdc-drawer--dismissible",
     modal: " mdc-drawer--modal"
@@ -100,7 +105,7 @@ export default class Drawer extends Vue {
     }
   }
 
-  created() {
+  loadItems() {
     this.itemsParsed = this.items?.map((item: any) =>
       this.element.mergeAttributes(
         {
@@ -108,11 +113,16 @@ export default class Drawer extends Vue {
           icon: null,
           active: false,
           href: "#",
-          action: null
+          action: null,
+          notification: false
         },
         item
       )
     );
+  }
+
+  created() {
+    this.loadItems();
   }
 
   mounted() {
@@ -135,4 +145,14 @@ export default class Drawer extends Vue {
 @include drawer.modal-core-styles;
 @include drawer.dismissible-core-styles;
 @include list.core-styles;
+
+@import "@material/theme/mdc-theme";
+
+.mdc-drawer {
+  .mdc-drawer-notification {
+    font-size: 18px;
+    color: $mdc-theme-secondary;
+    margin-left: auto;
+  }
+}
 </style>

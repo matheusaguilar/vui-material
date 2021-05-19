@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="app mdc-theme--background">
     <LayoutApp
+      ref="layoutApp"
       id="layoutApp"
       top-app-mode="standard"
       titleHref="/"
@@ -55,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-property-decorator";
+import { Ref, Vue } from "vue-property-decorator";
 import { Component } from "vue-property-decorator";
 
 import LayoutApp from "./components/LayoutApp.vue";
@@ -66,6 +67,8 @@ import ListItem from "./components/ListItem.vue";
   components: { LayoutApp, List, ListItem }
 })
 export default class AppLayout extends Vue {
+  @Ref("layoutApp") readonly layoutApp!: LayoutApp;
+
   private drawerItems = [
     { name: "Item 1", active: true, href: "/1", icon: "star" },
     { name: "Item 2", active: false, href: "/2", icon: "email" },
@@ -90,6 +93,14 @@ export default class AppLayout extends Vue {
     //     icon: "star"
     //   });
     // }
+  }
+
+  mounted() {
+    window.setTimeout(() => {
+      (this.drawerItems[0] as any).notification = true;
+      // console.log(this.drawerItems);
+      this.layoutApp.loadDrawerItems();
+    }, 2000);
   }
 }
 </script>

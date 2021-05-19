@@ -1,11 +1,15 @@
 import { Vue } from "vue-property-decorator";
 import { VComponent } from "@/ts/VComponent";
+interface Action {
+    call: Function;
+    label: string;
+}
 export default class Snackbar extends Vue {
     private id;
-    private text;
-    private action;
     element: VComponent;
-    open(): void;
-    clicked(): void;
+    text: string;
+    action: Action | undefined;
+    open(text: string, action?: Action): void;
     mounted(): void;
 }
+export {};
